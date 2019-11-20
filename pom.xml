@@ -21,6 +21,27 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+         <!-- Le driver JDBC utilisé seulement pour le test -->        
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- sqltool utilisé seulement pour le test pour initialiser la base -->                
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>sqltool</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+	<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
