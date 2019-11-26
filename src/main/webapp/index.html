@@ -11,13 +11,14 @@
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
                         // On montre la liste des codes
-                        
+                        showProducts();
                     }
             );
-            function showCodes() {
+
+            function showProducts() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
-                    url: "DiscountCodeInServlet",
+                    url: "allProducts",
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -31,6 +32,7 @@
                             }
                 });
             }
+
             // Ajouter un code
             function addCode() {
                 $.ajax({
@@ -47,6 +49,7 @@
                 });
                 return false;
             }
+
             // Supprimer un code
             function deleteCode(code) {
                 $.ajax({
@@ -62,47 +65,86 @@
                 });
                 return false;
             }
+
             // Fonction qui traite les erreurs de la requête
             function showError(xhr, status, message) {
                 alert(JSON.parse(xhr.responseText).message);
             }
+
         </script>
         <style>
-            h1 {
-                
-                font-family: sans-serif;
-                margin: 20px;
-                text-decoration: underline;
-                font-size: 40px;
-                color: black;
+            #h1-2 {
+                font-size: 25px;
             }
             
-            #codeForm{
-                text-align: right;
-                
+            p {
+                font-size: 20px;
             }
             
-            body {
-                background: cyan;
+            #h1-1{
+                letter-spacing: 1.5px;
+            }
+            
+            #field {
+                width: 280px;
+            }
+            
+            #pseudo {
+                width: 189px;
+                margin-bottom: 1px;
+            }
+            
+            #mdp {
+                width : 150px;
+                margin-top: 1px;
+                margin-bottom: 1px;
+            }
+            
+            select{
+                width: 40px;
+                font-size: 20px;
+                
             }
         </style>
+        
         <link rel="stylesheet" type="text/css" href="css/tableformat.css">
     </head>
     <body>
-        
+        <div>
+		<h1 id="h1-1">Bienvenue</h1>
+                <hr>
+        </div>
         <!-- On montre le formulaire de saisie -->
-        <h1>Site de ses morts</h1>
+        <h1 id="h1-2">N'hésitez pas à vous connecter ci-dessous pour accéder à toutes nos fonctionnalités</h1>
         <form id="codeForm" onsubmit="event.preventDefault(); Connect();">
-           
-            Pseudo : <input id="pseudo" name="code" required size="10" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>
-            Mot de passe : <input id ="mdp" name="mdp" required size="10">
+            <fieldset id="field"><legend>Saisie des informations de connection</legend>
+            Pseudo : <input id="pseudo" name="code" required size="8" pattern="[A-Z]{1,1}"><br>
+            Mot de Passe : <input id="mdp" name="taux" type="password"  title="Rappelez vous de ne jamais communiquer votre mot de passe"><br/>
             <input type="submit" value="Se connecter">
-            
+            </fieldset>
         </form>
-         <!-- La zone où les résultats vont s'afficher -->
-        <div id="codes"></div>
-
-        <!-- Le template qui sert à formatter la liste des codes -->
+        <p >Vous pouvez aussi consulter nos produits ci-dessous :</p>
         
+        
+        <p>Et les filtrer avec les catégories suivantes :  <select>
+            <option id="first_cat" value="A">A</option>
+            <option id="second_cat" value="B">B</option>
+            <option id="third_cat" value="C">C</option>
+            <option id="fourth_cat" value="D">D</option>
+        </select>
+        </p>
+        
+        <div id="codes"></div>
+        <!-- Le template qui sert à formatter la liste des codes -->
+        <script id="codesTemplate" type="text/template">
+            <TABLE>
+            <tr><th>Nom</th><th>Prix Unitaire</th></tr>
+            {{! Pour chaque enregistrement }}
+            {{#records}}
+                {{! Une ligne dans la table }}
+                <TR><TD>{{m_nom}}</TD><TD>{{m_prixUnitaire}}</TD></TR>
+            {{/records}}
+            </TABLE>
+        </script>
     </body>
 </html>
