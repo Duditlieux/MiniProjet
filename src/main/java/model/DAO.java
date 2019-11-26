@@ -70,7 +70,7 @@ public class DAO {
                         float prix = rs.getFloat("Prix_unitaire");
                         int stock = rs.getInt("Unites_en_stock");
                         int ucomm = rs.getInt("Unites_commandees");
-                        int reappro = rs.getInt("Niveau_de_reapprovi");
+                        int reappro = rs.getInt("Niveau_de_reappro");
                         int indispo = rs.getInt("Indisponible");
                         Product p = new Product(id, name, four, cat, qteu, prix, stock, ucomm, reappro, (indispo>0));
                         result.add(p);
@@ -78,5 +78,24 @@ public class DAO {
         }
         return result;
 	}
+    
+    public List<Categorie> allCategories() throws SQLException {
+        
+        List<Categorie> result = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Categorie ORDER BY Code";
+        try (Connection connection = myDataSource.getConnection(); 
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("Code");
+                    String libelle = rs.getString("Libelle");
+                    String desc = rs.getString("Description");
+                    Categorie c = new Categorie(id, libelle, desc);
+                    result.add(c);
+                }
+        }
+        return result;
+    }
     
 }
