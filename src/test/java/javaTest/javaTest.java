@@ -5,11 +5,13 @@
  */
 package javaTest;
 
-import java.DAO;
+import model.DAO;
+import model.Product;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
@@ -62,6 +64,16 @@ public class javaTest {
 		myConnection.close(); // La base de données de test est détruite ici
              	myObject = null; // Pas vraiment utile
 
+	}
+        
+        
+        @Test
+	public void addProductTest() throws SQLException {
+		Product p = new Product(19, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
+                List<Product> before = myObject.allProducts();
+                myObject.addProduct(p);
+                List<Product> after = myObject.allProducts();
+		assertEquals("Nombre de produits incorect !", after.size(), before.size()+1);
 	}
     
 }
