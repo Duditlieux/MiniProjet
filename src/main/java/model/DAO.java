@@ -23,7 +23,7 @@ public class DAO {
     
     public int addProduct(Product pr) throws SQLException {
         int result=0;
-        String sql = "INSERT INTO PRODUIT(Nom,Fournisseur,Categorie,Quantite_par_unite,Prix_unitaire,Unites_en_stock,Unites_commandees,Niveau_de_reapprovi,Indisponible) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO PRODUIT(Nom,Fournisseur,Categorie,Quantite_par_unite,Prix_unitaire,Unites_en_stock,Unites_commandees,Niveau_de_reappro,Indisponible) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection myConnection = myDataSource.getConnection(); 
             PreparedStatement statement = myConnection.prepareStatement(sql)) {
                 statement.setString(1, pr.getNom());
