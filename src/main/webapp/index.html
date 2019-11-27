@@ -12,6 +12,7 @@
                     function () {
                         // On montre la liste des codes
                         showProducts();
+                        showCategorie();
                     }
             );
 
@@ -34,20 +35,40 @@
             }
 
             // Ajouter un code
-            function addCode() {
+            function showCategorie() {
                 $.ajax({
-                    url: "addCode",
-                    // serialize() renvoie tous les paramètres saisis dans le formulaire
-                    data: $("#codeForm").serialize(),
+                    url: "AllCategories",
                     dataType: "json",
+                    error: showError,
                     success: // La fonction qui traite les résultats
                             function (result) {
-                                showCodes();
-                                console.log(result);
-                            },
-                    error: showError
+                                // Le code source du template est dans la page
+                                var template = $('#catTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#cat').html(processedTemplate);
+                            }
                 });
-                return false;
+            }
+            
+            function showProductFrom() {
+                // On fait un appel AJAX pour chercher les codes
+                $.ajax({
+                    url: "ProductCat",
+                    data: {"categorie": id_cat},
+                    dataType: "json",
+                    error: showError,
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#codesTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#codes').html(processedTemplate);
+                            }
+                });
             }
 
             // Supprimer un code
@@ -101,9 +122,12 @@
             }
             
             select{
-                width: 40px;
+                width: 245px;
                 font-size: 20px;
-                
+            }
+            
+            th {
+                background-color: #ccc;
             }
         </style>
         
@@ -126,18 +150,20 @@
         <p >Vous pouvez aussi consulter nos produits ci-dessous :</p>
         
         
-        <p>Et les filtrer avec les catégories suivantes :  <select>
-            <option id="first_cat" value="A">A</option>
-            <option id="second_cat" value="B">B</option>
-            <option id="third_cat" value="C">C</option>
-            <option id="fourth_cat" value="D">D</option>
-        </select>
-        </p>
+        <p>Et les filtrer avec les catégories suivantes : </p><div id="cat"></div>
+        <script id ="catTemplate" type="text/template">
+            <select onchange="showProductFrom();">
+                {{#records}}
+                    <option id="id_cat" value={{m_code}}>{{m_libelle}}</option>
+                {{/records}}
+            </select>
+        </script>
+        
         
         <div id="codes"></div>
         <!-- Le template qui sert à formatter la liste des codes -->
         <script id="codesTemplate" type="text/template">
-            <TABLE>
+            <TABLE border="1">
             <tr><th>Nom</th><th>Prix Unitaire</th></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
