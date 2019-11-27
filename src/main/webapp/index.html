@@ -52,7 +52,7 @@
                 });
             }
             
-            function showProductFrom() {
+            function showProductFrom(id_cat) {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
                     url: "ProductCat",
@@ -129,6 +129,14 @@
             th {
                 background-color: #ccc;
             }
+            
+            #prixunit {
+                
+            }
+            
+            #nom {
+                
+            }
         </style>
         
         <link rel="stylesheet" type="text/css" href="css/tableformat.css">
@@ -152,9 +160,10 @@
         
         <p>Et les filtrer avec les catégories suivantes : </p><div id="cat"></div>
         <script id ="catTemplate" type="text/template">
-            <select onchange="showProductFrom();">
+            <select id="id_cat">
+                <option onclick="showProducts()" value=0>Tout les produits</option> 
                 {{#records}}
-                    <option id="id_cat" value={{m_code}}>{{m_libelle}}</option>
+                    <option onclick="showProductFrom({{m_code}})" value={{m_code}}>{{m_libelle}}</option>
                 {{/records}}
             </select>
         </script>
@@ -168,7 +177,7 @@
             {{! Pour chaque enregistrement }}
             {{#records}}
                 {{! Une ligne dans la table }}
-                <TR><TD>{{m_nom}}</TD><TD>{{m_prixUnitaire}}</TD></TR>
+                <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_prixUnitaire}} €</TD></TR>
             {{/records}}
             </TABLE>
         </script>
