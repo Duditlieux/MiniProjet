@@ -10,10 +10,44 @@ and open the template in the editor.
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <script>
+            $(document).ready(// Exécuté à la fin du chargement de la page
+                    function () {
+                        // On montre la liste des codes
+                        showInfosClient();
+                    }
+            );
+
+            function showInfosClient() {
+                // On fait un appel AJAX pour chercher les codes
+                $.ajax({
+                    url: "ClientInfo",
+                    dataType: "json",
+                    error: showError,
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#infTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#inf').html(processedTemplate);
+                            }
+                });
+            }
+            </script>
     </head>
     <body>
-        <h1>Bienvenue dude</h1>
-        <div>TODO write content</div>
+        <h1>Bienvenue</h1>
+        <div>code :</div>
+        <div>societé :</div>
+        <div>contact :</div>
+        <div>adresse :</div>
+        <div>ville :</div>
+        <div>region :</div>
+        <div>code postal :</div>
+        <div>pays :</div>
+        <div>téléphone :</div>
+        <div>fax :</div>
     </body>
 </html>
