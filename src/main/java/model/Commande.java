@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.util.Date;
+import java.time.*;
 
 /**
  *
@@ -15,9 +15,9 @@ public class Commande {
 
     private int m_numeroa;
     private String m_client;
-    private Date m_saisieLe;
-    private Date m_envoyeeLe;
-    private int m_port;
+    private LocalDate m_saisieLe;
+    private LocalDate m_envoyeeLe;
+    private float m_port;
     private String m_destinataire;
     private String m_adresseDeLivraison;
     private String m_villeDeLivraison;
@@ -26,7 +26,7 @@ public class Commande {
     private String m_paysDeLivraison;
     private float m_remise;
 
-    Commande(int numero, String client, Date saisiLe, Date envoyeeLe, int port, String destinataire, String adresseDeLivraison, String villeDeLivraison, String regionDeLivraison, String codePostalDeLivraison, String paysDeLivraison, float remise) {
+    Commande(int numero, String client, LocalDate saisiLe, LocalDate envoyeeLe, float port, String destinataire, String adresseDeLivraison, String villeDeLivraison, String regionDeLivraison, String codePostalDeLivraison, String paysDeLivraison, float remise) {
         m_numeroa = numero;
         m_client = client;
         m_saisieLe = saisiLe;
@@ -50,15 +50,15 @@ public class Commande {
         return m_client;
     }
 
-    public Date getSaisieLe() {
+    public LocalDate getSaisieLe() {
         return m_saisieLe;
     }
 
-    public Date getEnvoyeeLe() {
+    public LocalDate getEnvoyeeLe() {
         return m_envoyeeLe;
     }
 
-    public int getPort() {
+    public float getPort() {
         return m_port;
     }
 
@@ -99,15 +99,15 @@ public class Commande {
         m_client = client;
     }
 
-    public void setSaisieLe(Date saisieLe) {
+    public void setSaisieLe(LocalDate saisieLe) {
         m_saisieLe = saisieLe;
     }
 
-    public void setEnvoyeeLe(Date envoyeeLe) {
+    public void setEnvoyeeLe(LocalDate envoyeeLe) {
         m_envoyeeLe = envoyeeLe;
     }
 
-    public void setPort(int port) {
+    public void setPort(float port) {
         m_port = port;
     }
 

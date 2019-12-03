@@ -9,8 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 public class DAO {
@@ -122,6 +126,65 @@ public class DAO {
                     result.add(c);
                 }
         }
+        return result;
+    }
+    
+    
+    public int addCommande(Commande c, Map<Product,Integer> produits) throws SQLException {
+        int result=0;
+        String sql = "INSERT INTO COMMANDE(Client,Port,Destinataire,Adresse_livraison,Ville_livraison,Region_livraison,Code_postal_livraison,Pays_livraison,Remise) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql2 = "UPDATE PRODUIT SET unites_en_stock = (SELECT unites_en_stock FROM PRODUIT WHERE reference=?)-? WHERE reference=?";
+        String sql3 = "INSERT INTO LIGNE VALUES(?,?,?)";
+        try (Connection myConnection = myDataSource.getConnection(); 
+            PreparedStatement statement = myConnection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement2 = myConnection.prepareStatement(sql2);
+            PreparedStatement statement3 = myConnection.prepareStatement(sql3)) {
+                myConnection.setAutoCommit(false);
+                try{
+                    // Commande
+                    statement.setString(1, c.getClient());
+                    statement.setFloat(2, c.getPort());
+                    statement.setString(3, c.getDestinataire());
+                    statement.setString(4, c.getAdresseDeLivraison());
+                    statement.setString(5, c.getVilleDeLivraison());
+                    statement.setString(6, c.getRegionDeLivraison());
+                    statement.setString(7, c.getCodePostalDeLivraison());
+                    statement.setString(8, c.getPaysDeLivraison());
+                    statement.setFloat(9, c.getRemise());
+                    result = statement.executeUpdate();
+                    
+                    int idC = -1;
+                    ResultSet rs = statement.getGeneratedKeys();
+                    if (rs.next()){
+                        idC = rs.getInt(1);
+                    }
+                    
+                    for (Map.Entry<Product, Integer> entry : produits.entrySet()) {
+                        Product p = entry.getKey();
+                        Integer qte = entry.getValue();
+                        
+                        // Produit
+                        statement2.setInt(1, p.getReference());
+                        statement2.setInt(2, qte);
+                        statement2.setInt(3, p.getReference());
+                        statement2.executeUpdate();
+                        
+                        // Ligne
+                        statement3.setInt(1, idC);
+                        statement3.setInt(2, p.getReference());
+                        statement3.setInt(3, qte);
+                    }
+                    
+                    myConnection.commit();
+                } catch (Exception ex) { // Une erreur s'est produite
+                    // On logge le message d'erreur
+                    Logger.getLogger("DAO").log(Level.SEVERE, "Transaction en erreur", ex);
+                    myConnection.rollback(); // On annule la transaction
+                    throw(ex); // On relève l'exception pour l'appelant
+                } finally {
+                    myConnection.setAutoCommit(true); // On revient au mode de fonctionnement sans transaction
+                }
+            }
         return result;
     }
     
