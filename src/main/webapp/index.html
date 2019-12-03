@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Godfrin - Mawet - Duditlieux</title>
+        <title>Accueil</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- On charge jQuery -->
         <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -144,6 +144,9 @@
     <body>
         <div>
 		<h1 id="h1-1">Bienvenue</h1>
+                <a href="./client.html">Page Client</a>
+                <br>
+                <a href="./admin.html">Page Admin</a>
                 <hr>
         </div>
         <!-- On montre le formulaire de saisie -->
@@ -155,7 +158,7 @@
             <input type="submit" value="Se connecter">
             </fieldset>
         </form>
-        <p >Vous pouvez aussi consulter nos produits ci-dessous :</p>
+        <p>Vous pouvez aussi consulter nos produits ci-dessous :</p>
         
         
         <p>Et les filtrer avec les catégories suivantes : </p><div id="cat"></div>
@@ -173,11 +176,13 @@
         <!-- Le template qui sert à formatter la liste des codes -->
         <script id="codesTemplate" type="text/template">
             <TABLE border="1">
-            <tr><th>Nom</th><th>Prix Unitaire</th></tr>
+            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
                 {{! Une ligne dans la table }}
-                <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_prixUnitaire}} €</TD></TR>
+                <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
+                    <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
+                </TR>
             {{/records}}
             </TABLE>
         </script>
