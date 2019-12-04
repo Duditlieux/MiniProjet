@@ -25,6 +25,18 @@ public class Commande {
     private String m_codePostalDeLivraison;
     private String m_paysDeLivraison;
     private float m_remise;
+    
+    public Commande(String client, float port, String destinataire, String adresseDeLivraison, String villeDeLivraison, String regionDeLivraison, String codePostalDeLivraison, String paysDeLivraison, float remise){
+        m_client = client;
+        m_port = port;
+        m_destinataire = destinataire;
+        m_adresseDeLivraison = adresseDeLivraison;
+        m_villeDeLivraison = villeDeLivraison;
+        m_regionDeLivraison = regionDeLivraison;
+        m_codePostalDeLivraison = codePostalDeLivraison;
+        m_paysDeLivraison = paysDeLivraison;
+        m_remise = remise;
+    }
 
     Commande(int numero, String client, LocalDate saisiLe, LocalDate envoyeeLe, float port, String destinataire, String adresseDeLivraison, String villeDeLivraison, String regionDeLivraison, String codePostalDeLivraison, String paysDeLivraison, float remise) {
         m_numeroa = numero;
