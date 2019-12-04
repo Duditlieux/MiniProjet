@@ -129,8 +129,8 @@ public class DAO {
 
     public int addCommande(Commande c, Map<Product, Integer> produits) throws SQLException {
         int result = 0;
-        String sql = "INSERT INTO COMMANDE(Client,Port,Destinataire,Adresse_livraison,Ville_livraison,Region_livraison,Code_postal_livraison,Pays_livraison,Remise) VALUES(?,?,?,?,?,?,?,?,?)";
-        String sql2 = "UPDATE PRODUIT SET unites_en_stock = (SELECT unites_en_stock FROM PRODUIT WHERE reference=?)-? WHERE reference=?";
+        String sql = "INSERT INTO COMMANDE(Client,Port,Destinataire,Adresse_livraison,Ville_livraison,Region_livraison,Code_postal_livrais,Pays_livraison,Remise) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql2 = "UPDATE PRODUIT SET unites_en_stock = unites_en_stock-? WHERE reference=?";
         String sql3 = "INSERT INTO LIGNE VALUES(?,?,?)";
         try (Connection myConnection = myDataSource.getConnection();
                 PreparedStatement statement = myConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -161,9 +161,8 @@ public class DAO {
                     Integer qte = entry.getValue();
 
                     // Produit
-                    statement2.setInt(1, p.getReference());
-                    statement2.setInt(2, qte);
-                    statement2.setInt(3, p.getReference());
+                    statement2.setInt(1, qte);
+                    statement2.setInt(2, p.getReference());
                     statement2.executeUpdate();
 
                     // Ligne
