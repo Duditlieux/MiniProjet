@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import model.Commande;
+import model.Panier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,8 +84,8 @@ public class javaTest {
         @Test
         public void addCommandeTest() throws SQLException {
             Commande c = new Commande("ALFKI",0, "Alfreds Futterkiste", "Obere Str. 57", "Berlin", "", "12209", "Allemagne", 0);
-            Map<Product,Integer> panier = new HashMap<>();
-            panier.put(new Product(1, "Test", 1, 1, "1L", 10, 5, 0, 0, false), 1);
+            Panier panier = new Panier();
+            panier.ajout(1);
             int ok = dao.addCommande(c, panier);
             assertEquals("Erreur ajout commande !", 1, ok);
         }
@@ -92,9 +93,9 @@ public class javaTest {
         @Test
         public void addCommandeTest2() throws SQLException {
             Commande c = new Commande("ALFKI",0, "Alfreds Futterkiste", "Obere Str. 57", "Berlin", "", "12209", "Allemagne", 0);
-            Map<Product,Integer> panier = new HashMap<>();
+            Panier panier = new Panier();
+            panier.ajout(1);
             int qte = 1;
-            panier.put(new Product(1, "Test", 1, 1, "1L", 10, 5, 0, 0, false), qte);
             int before = dao.allProducts().get(0).getUniteEnStock();
             dao.addCommande(c, panier);
             int after = dao.allProducts().get(0).getUniteEnStock();

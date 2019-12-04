@@ -54,6 +54,25 @@ public class DAO {
         }
         return result;
     }
+    
+    public int updateProduct(Product pr) throws SQLException {
+        int result = 0;
+        String sql = "UPDATE produit SET nom=?, fournisseur=?, categorie=?, quantite_par_unite=?, prix_unitaire=?, unites_en_stock=?, unites_commandees=?, niveau_de_reappro=?, indisponible=? WHERE reference=?";
+        try (Connection myConnection = myDataSource.getConnection();
+                PreparedStatement statement = myConnection.prepareStatement(sql)){
+            statement.setString(1,pr.getNom());
+            statement.setInt(2, pr.getFournisseur());
+            statement.setInt(3, pr.getCategorie());
+            statement.setString(4, pr.getQuantiteParUnite());
+            statement.setFloat(5, pr.getPrixUnitaire());
+            statement.setInt(6, pr.getUniteEnStock());
+            statement.setInt(7, pr.getUniteCommandees());
+            statement.setInt(8, pr.getNiveauDeReapprovisionnement());
+            statement.setInt(9, (pr.getIndisponible()) ? 1 : 0);
+            result = statement.executeUpdate();
+        }
+        return result;
+    }
 
     public List<Product> allProducts() throws SQLException {
 
@@ -127,7 +146,7 @@ public class DAO {
         return result;
     }
 
-    public int addCommande(Commande c, Map<Product, Integer> produits) throws SQLException {
+    public int addCommande(Commande c, Panier panier) throws SQLException {
         int result = 0;
         String sql = "INSERT INTO COMMANDE(Client,Port,Destinataire,Adresse_livraison,Ville_livraison,Region_livraison,Code_postal_livrais,Pays_livraison,Remise) VALUES(?,?,?,?,?,?,?,?,?)";
         String sql2 = "UPDATE PRODUIT SET unites_en_stock = unites_en_stock-? WHERE reference=?";
@@ -156,18 +175,18 @@ public class DAO {
                     idC = rs.getInt(1);
                 }
 
-                for (Map.Entry<Product, Integer> entry : produits.entrySet()) {
-                    Product p = entry.getKey();
+                for (Map.Entry<Integer, Integer> entry : panier.entrySet()) {
+                    Integer ref = entry.getKey();
                     Integer qte = entry.getValue();
 
                     // Produit
                     statement2.setInt(1, qte);
-                    statement2.setInt(2, p.getReference());
+                    statement2.setInt(2, ref);
                     statement2.executeUpdate();
 
                     // Ligne
                     statement3.setInt(1, idC);
-                    statement3.setInt(2, p.getReference());
+                    statement3.setInt(2, ref);
                     statement3.setInt(3, qte);
                 }
 
@@ -205,6 +224,27 @@ public class DAO {
             }
         }
         return c;
+    }
+    
+    public int updateClient(Client c) throws SQLException {
+        int result = 0;
+        String sql = "UPDATE client SET societe=?, contact=?, fonction=?, adresse=?, ville=?, region=?, code_postal=?, pays=?, telephone=?, fax=? WHERE code=?";
+        try (Connection myConnection = myDataSource.getConnection();
+                PreparedStatement statement = myConnection.prepareStatement(sql)){
+            statement.setString(1,c.getSociete());
+            statement.setString(2, c.getContact());
+            statement.setString(3, c.getFonction());
+            statement.setString(4, c.getAdresse());
+            statement.setString(5, c.getVille());
+            statement.setString(6, c.getRegion());
+            statement.setString(7, c.getCodePostal());
+            statement.setString(8, c.getPays());
+            statement.setString(9, c.getTelephone());
+            statement.setString(10, c.getFax());
+            statement.setString(11, c.getCode());
+            result = statement.executeUpdate();
+        }
+        return result;
     }
 
 }
