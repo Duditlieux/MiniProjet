@@ -11,8 +11,11 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
+import model.Commande;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +29,7 @@ public class javaTest {
     private static DataSource myDataSource;
 	private static Connection myConnection ;
 	
-	private DAO myObject;
+	private DAO dao;
 	
 	@Before
 	public  void setUp() throws IOException, SqlToolError, SQLException {
@@ -38,7 +41,7 @@ public class javaTest {
 		// On y met des données
 		executeSQLScript(myConnection, "comptoirs_data.sql");		
 
-            	myObject = new DAO(myDataSource);
+            	dao = new DAO(myDataSource);
 	}
         
         private void executeSQLScript(Connection connexion, String filename)  throws IOException, SqlToolError, SQLException {
@@ -62,7 +65,7 @@ public class javaTest {
         @After
 	public void tearDown() throws IOException, SqlToolError, SQLException {
 		myConnection.close(); // La base de données de test est détruite ici
-             	myObject = null; // Pas vraiment utile
+             	dao = null; // Pas vraiment utile
 
 	}
         
@@ -70,10 +73,32 @@ public class javaTest {
         @Test
 	public void addProductTest() throws SQLException {
 		Product p = new Product(19, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
-                List<Product> before = myObject.allProducts();
-                myObject.addProduct(p);
-                List<Product> after = myObject.allProducts();
+                List<Product> before = dao.allProducts();
+                dao.addProduct(p);
+                List<Product> after = dao.allProducts();
 		assertEquals("Nombre de produits incorect !", after.size(), before.size()+1);
 	}
+        
+        
+        @Test
+        public void addCommandeTest() throws SQLException {
+            Commande c = new Commande("ALFKI",0, "Alfreds Futterkiste", "Obere Str. 57", "Berlin", "", "12209", "Allemagne", 0);
+            Map<Product,Integer> panier = new HashMap<>();
+            panier.put(new Product(1, "Test", 1, 1, "1L", 10, 5, 0, 0, false), 1);
+            int ok = dao.addCommande(c, panier);
+            assertEquals("Erreur ajout commande !", 1, ok);
+        }
+        
+        @Test
+        public void addCommandeTest2() throws SQLException {
+            Commande c = new Commande("ALFKI",0, "Alfreds Futterkiste", "Obere Str. 57", "Berlin", "", "12209", "Allemagne", 0);
+            Map<Product,Integer> panier = new HashMap<>();
+            int qte = 1;
+            panier.put(new Product(1, "Test", 1, 1, "1L", 10, 5, 0, 0, false), qte);
+            int before = dao.allProducts().get(0).getUniteEnStock();
+            dao.addCommande(c, panier);
+            int after = dao.allProducts().get(0).getUniteEnStock();
+            assertEquals("Erreur ajout commande !", after+qte, before);
+        }
     
 }
