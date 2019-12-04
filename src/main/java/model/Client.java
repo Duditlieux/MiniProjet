@@ -37,91 +37,105 @@ public class Client {
         m_fax = fax;
     }
 
-    private String getCode() {
+    Client(){
+        m_code = "";
+        m_societe = "";
+        m_contact = "";
+        m_fonction = "";
+        m_adresse = "";
+        m_ville = "";
+        m_region = "";
+        m_codePostal = "";
+        m_pays = "";
+        m_telephone = "";
+        m_fax = "";
+    }
+    
+    public String getCode() {
         return m_code;
     }
 
-    private String getSociete() {
+    public String getSociete() {
         return m_societe;
     }
 
-    private String getContact() {
+    public String getContact() {
         return m_contact;
     }
 
-    private String getFonction() {
+    public String getFonction() {
         return m_fonction;
     }
 
-    private String getAdresse() {
+    public String getAdresse() {
         return m_adresse;
     }
 
-    private String getVille() {
+    public String getVille() {
         return m_ville;
     }
 
-    private String getRegion() {
+    public String getRegion() {
         return m_region;
     }
 
-    private String getCodePostal() {
+    public String getCodePostal() {
         return m_codePostal;
     }
 
-    private String getPays() {
+    public String getPays() {
         return m_pays;
     }
 
-    private String getTelephone() {
+    public String getTelephone() {
         return m_telephone;
     }
 
-    private String getFax() {
+    public String getFax() {
         return m_fax;
     }
 
-    private void setCode(String code) {
+    public void setCode(String code) {
         m_code = code;
     }
 
-    private void setSociete(String societe) {
+    public void setSociete(String societe) {
         m_societe = societe;
     }
 
-    private void setContact(String contact) {
+    public void setContact(String contact) {
         m_contact = contact;
     }
 
-    private void setFonction(String fonction) {
+    public void setFonction(String fonction) {
         m_fonction = fonction;
     }
 
-    private void setAdresse(String adresse) {
+    public void setAdresse(String adresse) {
         m_adresse = adresse;
     }
 
-    private void setVille(String ville) {
+    public void setVille(String ville) {
         m_ville = ville;
     }
 
-    private void setRegion(String region) {
+    public void setRegion(String region) {
         m_region = region;
     }
 
-    private void setCodePostal(String codePostal) {
+    public void setCodePostal(String codePostal) {
         m_codePostal = codePostal;
     }
 
-    private void setPays(String pays) {
+    public void setPays(String pays) {
         m_pays = pays;
     }
 
-    private void setTelephone(String telephone) {
+    public void setTelephone(String telephone) {
         m_telephone = telephone;
     }
 
-    private void setFax(String fax) {
+    public void setFax(String fax) {
         m_fax = fax;
     }
 
