@@ -226,6 +226,32 @@ public class DAO {
         return c;
     }
     
+    public Client getClient(String contact, String code) throws SQLException {
+        String sql = "SELECT * FROM client WHERE contact='?' AND code=?";
+        Client c = null;
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, contact);
+            stmt.setString(2, code);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                c = new Client();
+                c.setCode(code);
+                c.setSociete(rs.getString("societe"));
+                c.setContact(contact);
+                c.setFonction(rs.getString("fonction"));
+                c.setAdresse(rs.getString("adresse"));
+                c.setVille(rs.getString("ville"));
+                c.setRegion(rs.getString("region"));
+                c.setCodePostal(rs.getString("code_postal"));
+                c.setPays(rs.getString("pays"));
+                c.setTelephone(rs.getString("telephone"));
+                c.setFax(rs.getString("fax"));
+            }
+        }
+        return c;
+    }
+    
     public int updateClient(Client c) throws SQLException {
         int result = 0;
         String sql = "UPDATE client SET societe=?, contact=?, fonction=?, adresse=?, ville=?, region=?, code_postal=?, pays=?, telephone=?, fax=? WHERE code=?";
