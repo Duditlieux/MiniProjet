@@ -41,31 +41,48 @@
                 alert(JSON.parse(xhr.responseText).message);
             }
         </script>
+        <style>
+          input{
+                width: 18%;
+            }
+            
+            #codeForm{
+                border: 1px solid #CCC;
+                border-radius: 1em;
+                width: 400px;
+            }
+            
+            li{
+                width: 700px;
+            }
+           
+        </style>
     </head>
     <body>
         <h1>Bienvenue ${userName}</h1>
-        <div>${code}</div>
+        
         <div id="infos"></div>
 
         <script id="infosTemplate" type="text/template">
             {{#records}}
-                <div>
-                    <div>Bienvenue {{m_contact}} !</div>
-                    <div>societé : {{m_societe}}</div>
-                    <div>contact : {{m_contact}}</div>
-                    <div>fonction : {{m_fonction}}</div>
-                    <div>adresse : {{m_adresse}}</div>
-                    <div>ville : {{m_ville}}</div>
-                    <div>region : {{m_region}}</div>
-                    <div>code postal : {{m_codePostal}}</div>
-                    <div>pays : {{m_pays}}</div>
-                    <div>téléphone : {{m_telephone}}</div>
-                    <div>fax : {{m_fax}}</div>
-                </div>
+                <form id="codeForm" action="UpdateClientInfo" method="post">
+                    <ul>
+                        <li>societé : <input id="m_societe" value="{{m_societe}}" name="loginParam" required size="8"></li><br>
+                        <li>contact : <input id="m_contact" value="{{m_contact}}" name="loginParam" required size="8"></li><br>
+                        <li>fonction : <input id="m_fonction" value="{{m_fonction}}" name="loginParam" required size="8"></li><br>
+                        <li>adresse : <input id="m_adresse" value="{{m_adresse}}" name="loginParam" required size="8"></li><br>
+                        <li>ville : <input id="m_ville" value="{{m_ville}}" name="loginParam" required size="8"></li><br>
+                        <li>region : <input id="m_region" value="{{m_region}}" name="loginParam" required size="8"></li><br>
+                        <li>code postal : <input id="m_codePostal" value="{{m_codePostal}}" name="loginParam" required size="8"></li><br>
+                        <li>pays : <input id="m_pays" value="{{m_pays}}" name="loginParam" required size="8"></li><br>
+                        <li>téléphone : <input id="m_telephone" value="{{m_telephone}}" name="loginParam" required size="8"></li><br>
+                        <li>fax : <input id="m_fax" value="{{m_fax}}" name="loginParam" required size="8"></li><br>
+                    </ul>
+                </form>
             {{/records}}
         </script>
         
-        <form action="<c:url value="/"/>" method="POST"> 
+        <form method="POST"> 
 			<input type='submit' name='action' value='logout'>
 		</form>
     </body>
