@@ -48,7 +48,7 @@
             
             #codeForm{
                 border: 1px solid #CCC;
-                border-radius: 1em;
+                border-radius: 0.5em;
                 width: 400px;
             }
             
@@ -83,7 +83,8 @@
         </script>
         
         <form method="POST"> 
-			<input type='submit' name='action' value='logout'>
-		</form>
+            <input type='submit' name='action' value='Logout'><br>
+            <input type='submit' name='action' value='Update'
+	</form>
     </body>
 </html>
