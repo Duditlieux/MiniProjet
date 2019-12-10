@@ -21,6 +21,7 @@ public class Product {
     private int m_uniteCommandees;
     private int m_niveauDeReapprovisionnement;
     private boolean m_indisponible;
+    private int m_quantitePanier;
 
     public Product(){
         m_reference = 0;
@@ -33,6 +34,7 @@ public class Product {
         m_uniteCommandees = 0;
         m_niveauDeReapprovisionnement = 0;
         m_indisponible = true;
+        m_quantitePanier = 0;
     }
     
     public Product(int reference, String nom, int fournisseur, int categorie, String quantiteParUnite, float prixUnitaire, int uniteEnStock, int uniteCommandees, int niveauDeReapprovisionnement, boolean indisponible) {
@@ -46,6 +48,11 @@ public class Product {
         m_uniteCommandees = uniteCommandees;
         m_niveauDeReapprovisionnement = niveauDeReapprovisionnement;
         m_indisponible = indisponible;
+        m_quantitePanier = 0;
+    }
+    
+    public boolean equals(Product p){
+        return this.m_reference==p.m_reference;
     }
 
     //GETTERS
@@ -89,6 +96,10 @@ public class Product {
         return m_indisponible;
     }
     
+    public int getQuantitePanier(){
+        return m_quantitePanier;
+    }
+    
     //SETTERS
     
     public void setReference(int reference) {
@@ -128,6 +139,10 @@ public class Product {
 
     public void setIndisponible(boolean Indisponible) {
         m_indisponible = Indisponible;
+    }
+    
+    public void setQuantitePanier(int qte){
+        m_quantitePanier = qte;
     }
 
 }

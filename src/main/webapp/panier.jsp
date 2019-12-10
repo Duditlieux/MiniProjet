@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Espace Client</title>
+        <title>Panier</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- On charge jQuery -->
         <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -48,7 +48,7 @@
             
             #codeForm{
                 border: 1px solid #CCC;
-                border-radius: 0.5em;
+                border-radius: 1em;
                 width: 400px;
             }
             
@@ -59,32 +59,20 @@
         </style>
     </head>
     <body>
-        <h1>Bienvenue ${userName}</h1>
+        <div id="panier"></div>
         
-        <div id="infos"></div>
-
-        <script id="infosTemplate" type="text/template">
+        <script id="panierTemplate" type="text/template">
+            <TABLE border="1">
+            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th><th>Quantité</th></tr>
+            {{! Pour chaque enregistrement }}
             {{#records}}
-                <form id="codeForm" action="UpdateClientInfo" method="post">
-                    <ul>
-                        <li>societé : <input id="m_societe" value="{{m_societe}}" name="loginParam" required size="8"></li><br>
-                        <li>contact : <input id="m_contact" value="{{m_contact}}" name="loginParam" required size="8"></li><br>
-                        <li>fonction : <input id="m_fonction" value="{{m_fonction}}" name="loginParam" required size="8"></li><br>
-                        <li>adresse : <input id="m_adresse" value="{{m_adresse}}" name="loginParam" required size="8"></li><br>
-                        <li>ville : <input id="m_ville" value="{{m_ville}}" name="loginParam" required size="8"></li><br>
-                        <li>region : <input id="m_region" value="{{m_region}}" name="loginParam" required size="8"></li><br>
-                        <li>code postal : <input id="m_codePostal" value="{{m_codePostal}}" name="loginParam" required size="8"></li><br>
-                        <li>pays : <input id="m_pays" value="{{m_pays}}" name="loginParam" required size="8"></li><br>
-                        <li>téléphone : <input id="m_telephone" value="{{m_telephone}}" name="loginParam" required size="8"></li><br>
-                        <li>fax : <input id="m_fax" value="{{m_fax}}" name="loginParam" required size="8"></li><br>
-                    </ul>
-                </form>
+                {{! Une ligne dans la table }}
+                <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
+                    <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
+                    <TD id="qte">{{m_Qte}}</TD>
+                </TR>
             {{/records}}
+            </TABLE>
         </script>
-        
-        <form method="POST"> 
-            <input type='submit' name='action' value='Logout'><br>
-            <input type='submit' name='action' value='Update'
-	</form>
     </body>
 </html>

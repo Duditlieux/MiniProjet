@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import model.Client;
 import model.DAO;
 import model.DataSourceFactory;
+import model.Panier;
 
 public class LoginController extends HttpServlet {
     
@@ -136,6 +137,7 @@ public class LoginController extends HttpServlet {
                             System.out.println(c.getContact());
                             session.setAttribute("userName", c.getContact());
                             session.setAttribute("code", c.getCode());
+                            session.setAttribute("panier", new Panier());
                             //session.setAttribute("client", c);
                         }else { // On positionne un message d'erreur pour l'afficher dans la JSP
 			request.setAttribute("errorMessage", "Login/Password incorrect");

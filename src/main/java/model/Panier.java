@@ -5,37 +5,40 @@
  */
 package model;
 
-import java.util.HashMap;
-                                //Reference,Quantite
-public class Panier extends HashMap<Integer,Integer> {
+import java.util.ArrayList;
+
+public class Panier extends ArrayList<Product> {
     
     public Panier(){
         super();
     }
     
-    public void ajout(int pr){
-        if (this.containsKey(pr)){
-            int newQte = this.get(pr)+1;
-            this.put(pr, newQte);
+    public void ajout(Product pr){
+        if (this.contains(pr)){
+            Product p = this.remove(this.indexOf(pr));
+            p.setQuantitePanier(p.getQuantitePanier()+1);
+            this.add(p);
         } else {
-            this.put(pr, 1);
+            pr.setQuantitePanier(1);
+            this.add(pr);
         }
     }
     
-    public void reduireQte(int pr){
-        if (this.containsKey(pr)){
-            int newQte = this.get(pr)-1;
-            if (newQte>0){
-                this.put(pr, newQte);
+    public void reduireQte(Product pr){
+        if (this.contains(pr)){
+            Product p = this.remove(this.indexOf(pr));
+            p.setQuantitePanier(p.getQuantitePanier()-1);
+            if (p.getQuantitePanier()>0){
+                this.add(p);
             } else {
-                this.remove(pr);
+                this.remove(this.indexOf(pr));
             }
         }
     }
     
-    public void supprimer(int pr){
-        if (this.containsKey(pr)){
-            this.remove(pr);
+    public void supprimer(Product pr){
+        if (this.contains(pr)){
+            this.remove(this.indexOf(pr));
         }
     }
     
