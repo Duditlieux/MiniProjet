@@ -18,7 +18,7 @@ and open the template in the editor.
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
                         // On montre la liste des codes
-                        showInfosClient("ALFKI");
+                        showInfosClient(code);
                     }
             );
 
@@ -56,7 +56,7 @@ and open the template in the editor.
         <script id="infosTemplate" type="text/template">
             {{#records}}
                 <div>
-                    <div>Bienvenue {{m_code}} !</div>
+                    <div>Bienvenue {{m_contact}} !</div>
                     <div>societé : {{m_societe}}</div>
                     <div>contact : {{m_contact}}</div>
                     <div>fonction : {{m_fonction}}</div>

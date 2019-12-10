@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+import model.Client;
 import model.Commande;
 import model.Panier;
 import org.junit.After;
@@ -100,6 +101,13 @@ public class javaTest {
             dao.addCommande(c, panier);
             int after = dao.allProducts().get(0).getUniteEnStock();
             assertEquals("Erreur ajout commande !", after+qte, before);
+        }
+        
+        
+        @Test
+        public void getClientTest() throws SQLException {
+            Client c = dao.getClient("Maria Anders", "ALFKI");
+            assertEquals("Erreur getClient", true, c.getContact().equals("Maria Anders"));
         }
     
 }

@@ -5,6 +5,12 @@
  */
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author pedago
@@ -23,7 +29,7 @@ public class Client {
     private String m_telephone;
     private String m_fax;
 
-    Client(String code, String societe, String contact, String fonction, String adresse, String ville, String region, String codePostal, String pays, String telephone, String fax) {
+    public Client(String code, String societe, String contact, String fonction, String adresse, String ville, String region, String codePostal, String pays, String telephone, String fax) {
         m_code = code;
         m_societe = societe;
         m_contact = contact;
@@ -37,7 +43,7 @@ public class Client {
         m_fax = fax;
     }
 
-    Client(){
+    public Client(){
         m_code = "";
         m_societe = "";
         m_contact = "";
@@ -137,6 +143,26 @@ public class Client {
 
     public void setFax(String fax) {
         m_fax = fax;
+    }
+    
+    public String toJson(){
+        Map<String,String> client = new HashMap<>();
+        client.put("m_code", m_code);
+        client.put("m_societe", m_societe);
+        client.put("m_contact", m_contact);
+        client.put("m_fonction", m_fonction);
+        client.put("m_adresse", m_adresse);
+        client.put("m_ville", m_ville);
+        client.put("m_region", m_region);
+        client.put("m_codePostal", m_codePostal);
+        client.put("m_pays", m_pays);
+        client.put("m_telephone", m_telephone);
+        client.put("m_fax", m_fax);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(client);
+        
+        
+        //return null;
     }
 
 }

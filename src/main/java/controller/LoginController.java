@@ -9,15 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
 import model.Client;
 import model.DAO;
 import model.DataSourceFactory;
-import static model.DataSourceFactory.getDataSource;
 
 public class LoginController extends HttpServlet {
     
-    private static DataSource myDataSource;
     private DAO dao;
 
 	/**
@@ -135,8 +132,10 @@ public class LoginController extends HttpServlet {
                             // On a trouvé la combinaison login / password d'un client
                             // On stocke l'information dans la session
                             HttpSession session = request.getSession(true); // démarre la session
+                            System.out.println(c.getContact());
                             session.setAttribute("userName", c.getContact());
-                            session.setAttribute("client", c);
+                            session.setAttribute("code", c.getCode());
+                            //session.setAttribute("client", c);
                         }else { // On positionne un message d'erreur pour l'afficher dans la JSP
 			request.setAttribute("errorMessage", "Login/Password incorrect");
 		}

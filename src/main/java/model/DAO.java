@@ -227,7 +227,7 @@ public class DAO {
     }
     
     public Client getClient(String contact, String code) throws SQLException {
-        String sql = "SELECT * FROM client WHERE contact='?' AND code=?";
+        String sql = "SELECT * FROM client WHERE contact=? AND code=?";
         Client c = null;
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {

@@ -7,16 +7,21 @@ package servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Client;
 import model.DAO;
 import model.DataSourceFactory;
 
@@ -58,7 +63,14 @@ public class InfoClientJsonServelet extends HttpServlet {
             // Gson gson = new Gson();
             // setPrettyPrinting pour que le JSON généré soit plus lisible
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            out.println(gson.toJson(resultat));
+            //Type typeOfSrc = new TypeToken<Client>(){}.getType();
+            //out.println(gson.toJson(resultat,typeOfSrc));
+            String code = request.getParameter("code");
+            Client c = dao.getClient(code);
+            out.println(c.toJson());
+            //out.println(gson.toJson(resultat));
+        } catch (SQLException ex) {
+            Logger.getLogger(InfoClientJsonServelet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
