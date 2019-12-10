@@ -15,8 +15,13 @@
                         // On montre la liste des codes
                         showProducts();
                         showCategorie();
+                        showUser();
                     }
             );
+    
+                
+            
+            
 
             function showProducts() {
                 // On fait un appel AJAX pour chercher les codes
@@ -88,6 +93,19 @@
                 });
                 return false;
             }
+            
+            function showUser() {
+                var code = "${code}";
+                if(code=="") {
+                    var template = $('#loginTemplate').html();
+                    var processedTemplate = Mustache.to_html(template);
+                    $('#login').html(processedTemplate);
+                } else {
+                    var template = $('#userTemplate').html();
+                    var processedTemplate = Mustache.to_html(template);
+                    $('#login').html(processedTemplate);
+            }
+        }
 
             // Fonction qui traite les erreurs de la requête
             function showError(xhr, status, message) {
@@ -145,15 +163,7 @@
     </head>
     <body>
         <!-- On montre le formulaire de saisie -->
-        <h1 id="h1-2">N'hésitez pas à vous connecter ci-dessous pour accéder à toutes nos fonctionnalités</h1>
-        <form id="codeForm" action="LoginController" method="post">
-            <fieldset id="field"><legend>Saisie des informations de connection</legend>
-                Pseudo : <input id="loginParam" name="loginParam" required size="8"><br>
-                Mot de Passe : <input id="passwordParam" name="passwordParam" type="password"  title="Rappelez vous de ne jamais communiquer votre mot de passe"><br/>
-                  <input type="hidden" id="action" name="action" value="login"> 
-                <input type="submit" value="Se connecter">
-            </fieldset>
-        </form>
+        <div id="login"></div>
         <p>Vous pouvez aussi consulter nos produits ci-dessous :</p>
         
         
@@ -181,6 +191,26 @@
                 </TR>
             {{/records}}
             </TABLE>
+        </script>
+        
+        <script id="loginTemplate" type="text/template">
+            <h1 id="h1-2">N'hésitez pas à vous connecter ci-dessous pour accéder à toutes nos fonctionnalités</h1>
+            <form id="codeForm" method="post">
+            <fieldset id="field"><legend>Saisie des informations de connection</legend>
+                Pseudo : <input id="loginParam" name="loginParam" required size="8"><br>
+                Mot de Passe : <input id="passwordParam" name="passwordParam" type="password"  title="Rappelez vous de ne jamais communiquer votre mot de passe"><br/>
+                  <input type="hidden" id="action" name="action" value="login"> 
+                <input type="submit" value="Se connecter">
+            </fieldset>
+            </form>
+            {{#records}}
+            {{/records}}
+        </script>
+        
+        <script id="userTemplate" type="text/template">
+            <h1>Bienvenue ${userName}</h1>
+            {{#records}}
+            {{/records}}
         </script>
     </body>
 </html>
