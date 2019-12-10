@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
 		// Est-ce que l'utilisateur est connecté ?
 		// On cherche l'attribut userName dans la session
 		String userName = findUserInSession(request);
+                String code = findCodeInSession(request);
 		String jspView;
 		if (null == userName) { // L'utilisateur n'est pas connecté
 			// On choisit la page de login
@@ -54,13 +55,13 @@ public class LoginController extends HttpServlet {
 
 		} else if (userName.equals("Administrateur")){ // L'admin est connecté
 			// On choisit la page d'affichage
-			//jspView = "admin.jsp";
-                        jspView = "admin.html";
+			jspView = "admin.jsp";
+                        //jspView = "admin.html";
 		} else {
                     // L'utilisateur est connecté
                     // On choisit la page d'affichage
-                    //jspView = "client.jsp";
-                    jspView = "client.html";
+                    jspView = "client.jsp";
+                    //jspView = "client.html";
                 }
 		// On va vers la page choisie
 		request.getRequestDispatcher(jspView).forward(request, response);
@@ -155,6 +156,11 @@ public class LoginController extends HttpServlet {
 	private String findUserInSession(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		return (session == null) ? null : (String) session.getAttribute("userName");
+	}
+        
+        private String findCodeInSession(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		return (session == null) ? null : (String) session.getAttribute("code");
 	}
 
 }
