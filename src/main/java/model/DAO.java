@@ -175,8 +175,8 @@ public class DAO {
                     idC = rs.getInt(1);
                 }
 
-                for (Map.Entry<Integer, Integer> entry : panier.entrySet()) {
-                    Integer ref = entry.getKey();
+                for (Map.Entry<Product, Integer> entry : panier.entrySet()) {
+                    Integer ref = entry.getKey().getReference();
                     Integer qte = entry.getValue();
 
                     // Produit
@@ -273,5 +273,5 @@ public class DAO {
         }
         return result;
     }
-
+    
 }
