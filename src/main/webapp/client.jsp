@@ -60,31 +60,35 @@
     </head>
     <body>
         <h1>Bienvenue ${userName}</h1>
+        <form method="POST"> 
+            <input type='submit' name='action' value='accueil'><br>
+	</form>
         
         <div id="infos"></div>
 
         <script id="infosTemplate" type="text/template">
             {{#records}}
-                <form id="codeForm" action="UpdateClientInfo" method="post">
+                <form id="codeForm" method="post">
                     <ul>
-                        <li>societé : <input id="m_societe" value="{{m_societe}}" name="loginParam" required size="8"></li><br>
-                        <li>contact : <input id="m_contact" value="{{m_contact}}" name="loginParam" required size="8"></li><br>
-                        <li>fonction : <input id="m_fonction" value="{{m_fonction}}" name="loginParam" required size="8"></li><br>
-                        <li>adresse : <input id="m_adresse" value="{{m_adresse}}" name="loginParam" required size="8"></li><br>
-                        <li>ville : <input id="m_ville" value="{{m_ville}}" name="loginParam" required size="8"></li><br>
-                        <li>region : <input id="m_region" value="{{m_region}}" name="loginParam" required size="8"></li><br>
-                        <li>code postal : <input id="m_codePostal" value="{{m_codePostal}}" name="loginParam" required size="8"></li><br>
-                        <li>pays : <input id="m_pays" value="{{m_pays}}" name="loginParam" required size="8"></li><br>
-                        <li>téléphone : <input id="m_telephone" value="{{m_telephone}}" name="loginParam" required size="8"></li><br>
-                        <li>fax : <input id="m_fax" value="{{m_fax}}" name="loginParam" required size="8"></li><br>
+                        <li>societé : <input id="m_societe" value="{{m_societe}}" name="m_societe" required size="8"></li><br>
+                        <li>contact : <input id="m_contact" value="{{m_contact}}" name="m_contact" required size="8"></li><br>
+                        <li>fonction : <input id="m_fonction" value="{{m_fonction}}" name="m_fonction" size="8"></li><br>
+                        <li>adresse : <input id="m_adresse" value="{{m_adresse}}" name="m_adresse" size="8"></li><br>
+                        <li>ville : <input id="m_ville" value="{{m_ville}}" name="m_ville" size="8"></li><br>
+                        <li>region : <input id="m_region" value="{{m_region}}" name="m_region" size="8"></li><br>
+                        <li>code postal : <input id="m_codePostal" value="{{m_codePostal}}" name="m_codePostal" size="8"></li><br>
+                        <li>pays : <input id="m_pays" value="{{m_pays}}" name="m_pays" size="8"></li><br>
+                        <li>téléphone : <input id="m_telephone" value="{{m_telephone}}" name="m_telephone" size="8"></li><br>
+                        <li>fax : <input id="m_fax" value="{{m_fax}}" name="m_fax" size="8"></li><br>
+                        <input id="code" name="code" type="hidden" value="{{m_code}}">
+                        <input type='submit' name='action' value='update'>
                     </ul>
                 </form>
             {{/records}}
         </script>
         
         <form method="POST"> 
-            <input type='submit' name='action' value='Logout'><br>
-            <input type='submit' name='action' value='Update'
+            <input type='submit' name='action' value='logout'><br>
 	</form>
     </body>
 </html>

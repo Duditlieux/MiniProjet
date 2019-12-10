@@ -13,6 +13,7 @@ import model.Client;
 import model.DAO;
 import model.DataSourceFactory;
 import model.Panier;
+import model.Product;
 
 public class LoginController extends HttpServlet {
     
@@ -41,8 +42,21 @@ public class LoginController extends HttpServlet {
 				case "logout":
 					doLogout(request);
 					break;
+                                case "update":
+                                    updateClient(request);
+                                    break;
+                                case "accueil":
+                                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                                    break;
+                                case "profil":
+                                    request.getRequestDispatcher("client.jsp").forward(request, response);
+                                    break;
+                                case "ajouter":
+                                    ajouterPanier(request);
 			}
 		}
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+
 
 		// Est-ce que l'utilisateur est connecté ?
 		// On cherche l'attribut userName dans la session
@@ -65,7 +79,7 @@ public class LoginController extends HttpServlet {
                     //jspView = "client.html";
                 }
 		// On va vers la page choisie
-		request.getRequestDispatcher(jspView).forward(request, response);
+		//request.getRequestDispatcher(jspView).forward(request, response);
 
 	}
 
@@ -164,5 +178,43 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		return (session == null) ? null : (String) session.getAttribute("code");
 	}
+        
+        private void updateClient(HttpServletRequest request){
+            String code = request.getParameter("code");
+            String societe = request.getParameter("m_societe");
+            String contact = request.getParameter("m_contact");
+            String fonction = request.getParameter("m_fonction");
+            String adresse = request.getParameter("m_adresse");
+            String ville = request.getParameter("m_ville");
+            String region = request.getParameter("m_region");
+            String codePostal = request.getParameter("m_codePostal");
+            String pays = request.getParameter("m_pays");
+            String telephone = request.getParameter("m_telephone");
+            String fax = request.getParameter("m_fax");
+            Client c = new Client(code, societe, contact, fonction, adresse, ville, region, codePostal, pays, telephone, fax);
+            try {
+                dao.updateClient(c);
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        private void ajouterPanier(HttpServletRequest request){
+            String ref = request.getParameter("ref");
+            Panier panier = null;
+            HttpSession session = request.getSession(false);
+		if (session != null) {
+			panier = (Panier) session.getAttribute("panier");
+		}
+            Product pr;
+        try {
+            Integer refId = Integer.parseInt(ref);
+            pr = dao.getProduct(refId);
+            panier.ajout(pr);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
 
 }

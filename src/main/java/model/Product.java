@@ -23,7 +23,7 @@ public class Product {
     private boolean m_indisponible;
     private int m_quantitePanier;
 
-    public Product(){
+    public Product() {
         m_reference = 0;
         m_nom = "";
         m_fournisseur = 0;
@@ -36,7 +36,7 @@ public class Product {
         m_indisponible = true;
         m_quantitePanier = 0;
     }
-    
+
     public Product(int reference, String nom, int fournisseur, int categorie, String quantiteParUnite, float prixUnitaire, int uniteEnStock, int uniteCommandees, int niveauDeReapprovisionnement, boolean indisponible) {
         m_reference = reference;
         m_nom = nom;
@@ -50,13 +50,12 @@ public class Product {
         m_indisponible = indisponible;
         m_quantitePanier = 0;
     }
-    
-    public boolean equals(Product p){
-        return this.m_reference==p.m_reference;
+
+    public boolean equals(Product p) {
+        return this.m_reference == p.m_reference;
     }
 
     //GETTERS
-    
     public int getReference() {
         return m_reference;
     }
@@ -69,9 +68,10 @@ public class Product {
         return m_fournisseur;
     }
 
-    public int getCategorie(){
+    public int getCategorie() {
         return m_categorie;
     }
+
     public String getQuantiteParUnite() {
         return m_quantiteParUnite;
     }
@@ -95,13 +95,12 @@ public class Product {
     public boolean getIndisponible() {
         return m_indisponible;
     }
-    
-    public int getQuantitePanier(){
+
+    public int getQuantitePanier() {
         return m_quantitePanier;
     }
-    
+
     //SETTERS
-    
     public void setReference(int reference) {
         m_reference = reference;
     }
@@ -114,9 +113,10 @@ public class Product {
         m_fournisseur = fournisseur;
     }
 
-    public void setCategorie(int categorie){
+    public void setCategorie(int categorie) {
         m_categorie = categorie;
     }
+
     public void setQuantiteParUnite(String quantiteParUnite) {
         m_quantiteParUnite = quantiteParUnite;
     }
@@ -140,8 +140,8 @@ public class Product {
     public void setIndisponible(boolean Indisponible) {
         m_indisponible = Indisponible;
     }
-    
-    public void setQuantitePanier(int qte){
+
+    public void setQuantitePanier(int qte) {
         m_quantitePanier = qte;
     }
 

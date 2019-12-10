@@ -182,13 +182,18 @@
         <!-- Le template qui sert à formatter la liste des codes -->
         <script id="codesTemplate" type="text/template">
             <TABLE border="1">
-            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th></tr>
+            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th><c:if test="${not empty sessionScope.code}"><th>Panier</th></c:if></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
                 {{! Une ligne dans la table }}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
                     <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
+                    <c:set var = "indispo" scope = "session" value = "{{m_indisponible}}}"/>
+                    <c:if test="${indispo == false}"><td><form method="POST"><input id="ref" name="ref" type="hidden" value="{{m_reference}}"><input type='submit' name='action' value='ajouter'></form></td></c:if>
+                    <c:if test="${indispo == true}"><td>Indisponible</td></c:if><td>{{m_quantitePanier}}</td>
+                        
                 </TR>
+                
             {{/records}}
             </TABLE>
         </script>
@@ -209,6 +214,10 @@
         
         <script id="userTemplate" type="text/template">
             <h1>Bienvenue ${userName}</h1>
+            <form method="POST"> 
+            <input type='submit' name='action' value='profil'>
+            <input type='submit' name='action' value='logout'>
+            </form>
             {{#records}}
             {{/records}}
         </script>

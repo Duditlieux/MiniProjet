@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Properties;
 import javax.servlet.ServletException;
@@ -17,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAO;
 import model.DataSourceFactory;
 import model.Panier;
@@ -41,15 +41,19 @@ public class PanierJsonServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-
+        Panier panier = null;
+                HttpSession session = request.getSession(false);
+		if (session != null) {
+			panier = (Panier) request.getAttribute("panier");
+		}
 		Properties resultat = new Properties();
-                //resultat.put("records", request.getAttribute("panier"));
-                Panier p = new Panier();
-                Product pr = new Product();
-                pr.setReference(1);
-                p.ajout(pr);
-                resultat.put("records", p);
+                if (panier != null){
+                    resultat.put("records", panier);
+                } else {
+                    resultat.put("records", Collections.EMPTY_LIST);
+                }
                 
+               
 		try (PrintWriter out = response.getWriter()) {
 			// On spécifie que la servlet va générer du JSON
 			response.setContentType("application/json;charset=UTF-8");

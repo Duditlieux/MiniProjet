@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -20,6 +19,7 @@ import javax.sql.DataSource;
 public class DAO {
 
     private final DataSource myDataSource;
+    private Panier panier;
 
     public DAO(DataSource dataSource) {
         myDataSource = dataSource;
@@ -99,7 +99,7 @@ public class DAO {
         }
         return result;
     }
-
+    
     public List<Product> allProductsCat(String id_cat) throws SQLException {
 
         List<Product> result = new ArrayList<>();
@@ -122,6 +122,31 @@ public class DAO {
                 int indispo = rs.getInt("Indisponible");
                 Product p = new Product(id, name, four, cat, qteu, prix, stock, ucomm, reappro, (indispo > 0));
                 result.add(p);
+            }
+        }
+        return result;
+    }
+
+    public Product getProduct(int id) throws SQLException {
+
+        Product result = new Product();
+
+        String sql = "SELECT * FROM Produit WHERE reference=?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("Nom");
+                int four = rs.getInt("Fournisseur");
+                int cat = rs.getInt("Categorie");
+                String qteu = rs.getString("Quantite_par_unite");
+                float prix = rs.getFloat("Prix_unitaire");
+                int stock = rs.getInt("Unites_en_stock");
+                int ucomm = rs.getInt("Unites_commandees");
+                int reappro = rs.getInt("Niveau_de_reappro");
+                int indispo = rs.getInt("Indisponible");
+                result = new Product(id, name, four, cat, qteu, prix, stock, ucomm, reappro, (indispo > 0));
             }
         }
         return result;
@@ -174,22 +199,22 @@ public class DAO {
                 if (rs.next()) {
                     idC = rs.getInt(1);
                 }
-
-                for (Map.Entry<Product, Integer> entry : panier.entrySet()) {
-                    Integer ref = entry.getKey().getReference();
-                    Integer qte = entry.getValue();
-
+                   
+                for (int i=0;i<panier.size();i++){
+                    Integer ref = panier.get(i).getReference();
+                    Integer qte = panier.get(i).getQuantitePanier();
+                    
                     // Produit
                     statement2.setInt(1, qte);
                     statement2.setInt(2, ref);
                     statement2.executeUpdate();
-
+                    
                     // Ligne
                     statement3.setInt(1, idC);
                     statement3.setInt(2, ref);
                     statement3.setInt(3, qte);
                 }
-
+                
                 myConnection.commit();
             } catch (Exception ex) { // Une erreur s'est produite
                 // On logge le message d'erreur

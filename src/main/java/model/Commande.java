@@ -37,6 +37,18 @@ public class Commande {
         m_paysDeLivraison = paysDeLivraison;
         m_remise = remise;
     }
+    
+    public Commande(Client c, float port, float remise){
+        m_client = c.getCode();
+        m_port = port;
+        m_destinataire = c.getContact();
+        m_adresseDeLivraison = c.getAdresse();
+        m_villeDeLivraison = c.getVille();
+        m_regionDeLivraison = c.getRegion();
+        m_codePostalDeLivraison = c.getCodePostal();
+        m_paysDeLivraison = c.getPays();
+        m_remise = remise;
+    }
 
     Commande(int numero, String client, LocalDate saisiLe, LocalDate envoyeeLe, float port, String destinataire, String adresseDeLivraison, String villeDeLivraison, String regionDeLivraison, String codePostalDeLivraison, String paysDeLivraison, float remise) {
         m_numeroa = numero;
