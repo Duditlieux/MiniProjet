@@ -50,8 +50,8 @@ public class LoginController extends HttpServlet {
 		String jspView;
 		if (null == userName) { // L'utilisateur n'est pas connecté
 			// On choisit la page de login
-			//jspView = "login.jsp";
-                        jspView = "index.html";
+			jspView = "index.jsp";
+                        //jspView = "index.html";
 
 		} else if (userName.equals("Administrateur")){ // L'admin est connecté
 			// On choisit la page d'affichage
