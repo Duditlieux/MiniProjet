@@ -211,6 +211,7 @@ public class DAO {
             stmt.setString(1, code);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                c.setCode(code);
                 c.setSociete(rs.getString("societe"));
                 c.setContact(rs.getString("contact"));
                 c.setFonction(rs.getString("fonction"));

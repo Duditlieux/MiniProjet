@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +51,10 @@ public class InfoClientJsonServelet extends HttpServlet {
         
         try {
             String code = request.getParameter("code");
-            resultat.put("records", dao.getClient(code));
+            Client c = dao.getClient(code);
+            List<Client> clients = new ArrayList<>();
+            clients.add(c);
+            resultat.put("records", clients);
         } catch (SQLException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resultat.put("records", Collections.EMPTY_LIST);
@@ -63,12 +68,9 @@ public class InfoClientJsonServelet extends HttpServlet {
             // Gson gson = new Gson();
             // setPrettyPrinting pour que le JSON généré soit plus lisible
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            //Type typeOfSrc = new TypeToken<Client>(){}.getType();
-            //out.println(gson.toJson(resultat,typeOfSrc));
             String code = request.getParameter("code");
             Client c = dao.getClient(code);
-            out.println(c.toJson());
-            //out.println(gson.toJson(resultat));
+            out.println(gson.toJson(resultat));
         } catch (SQLException ex) {
             Logger.getLogger(InfoClientJsonServelet.class.getName()).log(Level.SEVERE, null, ex);
         }
