@@ -53,9 +53,11 @@ public class LoginController extends HttpServlet {
                                     break;
                                 case "ajouter":
                                     ajouterPanier(request);
+                                case "panier":
+                                    request.getRequestDispatcher("panier.jsp").forward(request, response);
 			}
 		}
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
 
 
 		// Est-ce que l'utilisateur est connecté ?
@@ -79,7 +81,7 @@ public class LoginController extends HttpServlet {
                     //jspView = "client.html";
                 }
 		// On va vers la page choisie
-		//request.getRequestDispatcher(jspView).forward(request, response);
+		request.getRequestDispatcher(jspView).forward(request, response);
 
 	}
 
@@ -211,6 +213,7 @@ public class LoginController extends HttpServlet {
             Integer refId = Integer.parseInt(ref);
             pr = dao.getProduct(refId);
             panier.ajout(pr);
+            session.setAttribute("panier", panier);
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
