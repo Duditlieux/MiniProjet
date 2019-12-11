@@ -126,6 +126,36 @@ public class DAO {
         }
         return result;
     }
+    
+    public List<Product> allProductsPan(Panier panier) throws SQLException {
+
+        List<Product> result = new ArrayList<>();
+
+        String sql = "SELECT * FROM Produit ORDER BY Reference";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("Reference");
+                String name = rs.getString("Nom");
+                int four = rs.getInt("Fournisseur");
+                int cat = rs.getInt("Categorie");
+                String qteu = rs.getString("Quantite_par_unite");
+                float prix = rs.getFloat("Prix_unitaire");
+                int stock = rs.getInt("Unites_en_stock");
+                int ucomm = rs.getInt("Unites_commandees");
+                int reappro = rs.getInt("Niveau_de_reappro");
+                int indispo = rs.getInt("Indisponible");
+                Product p = new Product(id, name, four, cat, qteu, prix, stock, ucomm, reappro, (indispo > 0));
+                if (panier.contains(p)){
+                    int qte = panier.get(panier.indexOf(p)).getQuantitePanier();
+                    p.setQuantitePanier(qte);
+                }
+                result.add(p);
+            }
+        }
+        return result;
+    }
 
     public Product getProduct(int id) throws SQLException {
 

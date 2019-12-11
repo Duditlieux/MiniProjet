@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DAO;
 import model.DataSourceFactory;
+import model.Panier;
 
 /**
  *
@@ -40,8 +42,20 @@ public class ListProductsJsonServlet extends HttpServlet {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
 
 		Properties resultat = new Properties();
+                Panier panier = new Panier();
+                boolean panierOk;
+                try {
+                    panier = (Panier) request.getAttribute("panier");
+                    panierOk = panier!=null & panier.size()>0;
+                } catch (NullPointerException ex){
+                    panierOk = false;
+                }
 		try {
-			resultat.put("records", dao.allProducts());
+                    if (panierOk==true){
+                        resultat.put("records", dao.allProductsPan(panier));
+                    } else {
+                        resultat.put("records", dao.allProducts());
+                    }
 		} catch (SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resultat.put("records", Collections.EMPTY_LIST);

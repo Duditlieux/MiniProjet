@@ -24,7 +24,7 @@
             
 
             function showProducts() {
-                // On fait un appel AJAX pour chercher les codes
+                // On fait un appel AJAX pour chercher les produits
                 $.ajax({
                     url: "allProducts",
                     dataType: "json",
@@ -40,8 +40,27 @@
                             }
                 });
             }
+            
+            function showProductsPan(panier) {
+                // On fait un appel AJAX pour chercher les produits
+                $.ajax({
+                    url: "allProducts",
+                    data: {"panier": panier},
+                    dataType: "json",
+                    error: showError,
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#codesTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#codes').html(processedTemplate);
+                            }
+                });
+            }
+            
 
-            // Ajouter un code
             function showCategorie() {
                 $.ajax({
                     url: "AllCategories",
@@ -96,7 +115,7 @@
             
             function showUser() {
                 var code = "${code}";
-                if(code=="") {
+                if(code==="") {
                     var template = $('#loginTemplate').html();
                     var processedTemplate = Mustache.to_html(template);
                     $('#login').html(processedTemplate);
@@ -188,10 +207,10 @@
                 {{! Une ligne dans la table }}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
                     <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
-                    <c:set var = "indispo" scope = "session" value = "{{m_indisponible}}}"/>
+                    <c:set var = "indispo" scope = "page" value = "{{m_indisponible}}}"/>
                     <c:if test="${indispo == false}"><td><form method="POST"><input id="ref" name="ref" type="hidden" value="{{m_reference}}"><input type='submit' name='action' value='ajouter'></form></td></c:if>
                     <c:if test="${indispo == true}"><td>Indisponible</td></c:if><td>{{m_quantitePanier}}</td>
-                        
+                    <c:remove var="indispo" scope="page" />
                 </TR>
                 
             {{/records}}
