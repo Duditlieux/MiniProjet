@@ -257,7 +257,33 @@ public class DAO {
         }
         return result;
     }
-
+    
+    public List<Client> getAllClient() throws SQLException {
+     String sql = "SELECT * FROM client";
+        List<Client> c = new ArrayList<Client>();
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Client cli = new Client();
+                cli.setCode(rs.getString("code"));
+                cli.setSociete(rs.getString("societe"));
+                cli.setContact(rs.getString("contact"));
+                cli.setFonction(rs.getString("fonction"));
+                cli.setAdresse(rs.getString("adresse"));
+                cli.setVille(rs.getString("ville"));
+                cli.setRegion(rs.getString("region"));
+                cli.setCodePostal(rs.getString("code_postal"));
+                cli.setPays(rs.getString("pays"));
+                cli.setTelephone(rs.getString("telephone"));
+                cli.setFax(rs.getString("fax"));
+                c.add(cli);
+            }
+        }
+        return c;
+    }
+    
+    
     public Client getClient(String code) throws SQLException {
         String sql = "SELECT * FROM client WHERE code=?";
         Client c = new Client();
