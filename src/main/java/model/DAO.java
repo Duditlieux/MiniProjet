@@ -355,4 +355,20 @@ public class DAO {
         return result;
     }
     
+    
+    public ArrayList<Couple> getChiffreDAffaireByCountry() throws SQLException{
+        String sql = "SELECT produit.Prix_unitaire*ligne.quantite as chiffreDAff, Commande.Pays_Livraison FROM produit, ligne, commande group by pays_livraison";
+        ArrayList<Couple> couples = new ArrayList<>();  
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Couple couple = new Couple();
+                couple.setS(rs.getString("Pays_Livraison"));
+                couple.setN(rs.getInt("chiffreDAff"));
+                couples.add(couple);
+            }
+        }
+        return couples;
+    }
 }
