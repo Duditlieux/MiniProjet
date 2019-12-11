@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author pedago
  */
-public class Product {
+public class Product implements Serializable {
 
     private int m_reference;
     private String m_nom;
@@ -49,6 +51,20 @@ public class Product {
         m_niveauDeReapprovisionnement = niveauDeReapprovisionnement;
         m_indisponible = indisponible;
         m_quantitePanier = 0;
+    }
+    
+    public Product(int reference, String nom, int fournisseur, int categorie, String quantiteParUnite, float prixUnitaire, int uniteEnStock, int uniteCommandees, int niveauDeReapprovisionnement, boolean indisponible, int qtePanier) {
+        m_reference = reference;
+        m_nom = nom;
+        m_fournisseur = fournisseur;
+        m_categorie = categorie;
+        m_quantiteParUnite = quantiteParUnite;
+        m_prixUnitaire = prixUnitaire;
+        m_uniteEnStock = uniteEnStock;
+        m_uniteCommandees = uniteCommandees;
+        m_niveauDeReapprovisionnement = niveauDeReapprovisionnement;
+        m_indisponible = indisponible;
+        m_quantitePanier = qtePanier;
     }
 
     public boolean equals(Product p) {

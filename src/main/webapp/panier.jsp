@@ -14,25 +14,24 @@
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
                         // On montre la liste des codes
-                        showInfosClient("${code}");
+                        showPanier();
                     }
             );
 
-            function showInfosClient(code) {
+            function showPanier() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
-                    url: "InfoClient",
-                    data: {"code": code},
+                    url: "viewPanier",
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
                             function (result) {
                                 // Le code source du template est dans la page
-                                var template = $('#infosTemplate').html();
+                                var template = $('#panierTemplate').html();
                                 // On combine le template avec le résultat de la requête
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
-                                $('#infos').html(processedTemplate);
+                                $('#panier').html(processedTemplate);
                             }
                 });
             }

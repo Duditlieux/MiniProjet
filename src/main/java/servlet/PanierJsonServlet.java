@@ -44,7 +44,7 @@ public class PanierJsonServlet extends HttpServlet {
         Panier panier = null;
                 HttpSession session = request.getSession(false);
 		if (session != null) {
-			panier = (Panier) request.getAttribute("panier");
+			panier = (Panier) session.getAttribute("panier");
 		}
 		Properties resultat = new Properties();
                 if (panier != null){

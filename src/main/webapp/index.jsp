@@ -235,6 +235,7 @@
             <h1>Bienvenue ${userName}</h1>
             <form method="POST"> 
             <input type='submit' name='action' value='profil'>
+            <input type='submit' name='action' value='panier'>
             <input type='submit' name='action' value='logout'>
             </form>
             {{#records}}

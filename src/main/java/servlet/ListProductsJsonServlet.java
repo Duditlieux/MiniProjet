@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAO;
 import model.DataSourceFactory;
 import model.Panier;
@@ -42,10 +42,11 @@ public class ListProductsJsonServlet extends HttpServlet {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
 
 		Properties resultat = new Properties();
-                Panier panier = new Panier();
+                HttpSession session = request.getSession(false);
+                Panier panier = (Panier) session.getAttribute("panier");
                 boolean panierOk;
                 try {
-                    panier = (Panier) request.getAttribute("panier");
+                    //panier = (Panier) request.getAttribute("panier");
                     panierOk = panier!=null & panier.size()>0;
                 } catch (NullPointerException ex){
                     panierOk = false;

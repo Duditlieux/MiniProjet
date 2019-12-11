@@ -5,9 +5,10 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Panier extends ArrayList<Product> {
+public class Panier extends ArrayList<Product> implements Serializable {
     
     public Panier(){
         super();
