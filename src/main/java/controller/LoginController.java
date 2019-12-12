@@ -53,8 +53,13 @@ public class LoginController extends HttpServlet {
                                     break;
                                 case "ajouter":
                                     ajouterPanier(request);
+                                    break;
+                                case "retrait":
+                                    retraitPanier(request);
+                                    break;
                                 case "panier":
                                     request.getRequestDispatcher("panier.jsp").forward(request, response);
+                                    break;
 			}
 		}
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -212,8 +217,35 @@ public class LoginController extends HttpServlet {
         try {
             Integer refId = Integer.parseInt(ref);
             pr = dao.getProduct(refId);
-            panier.ajout(pr);
-            session.setAttribute("panier", panier);
+            if (panier!=null){
+                panier.ajout(pr);
+            }
+            if (session!=null){
+                session.setAttribute("panier", panier);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
+        
+        private void retraitPanier(HttpServletRequest request){
+            String ref = request.getParameter("ref");
+            Panier panier = null;
+            HttpSession session = request.getSession(false);
+		if (session != null) {
+			panier = (Panier) session.getAttribute("panier");
+		}
+            Product pr;
+        try {
+            Integer refId = Integer.parseInt(ref);
+            pr = dao.getProduct(refId);
+            if (panier!=null){
+                panier.reduireQte(pr);
+            }
+            if (session!=null){
+                session.setAttribute("panier", panier);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

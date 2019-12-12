@@ -22,6 +22,7 @@
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
                     url: "viewPanier",
+                    withCredentials: true,
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -58,6 +59,9 @@
         </style>
     </head>
     <body>
+        <form method="POST"> 
+            <input type='submit' name='action' value='accueil'><br>
+	</form>
         <div id="panier"></div>
         
         <script id="panierTemplate" type="text/template">
@@ -68,7 +72,7 @@
                 {{! Une ligne dans la table }}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
                     <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
-                    <TD id="qte">{{m_Qte}}</TD>
+                    <TD id="qte">{{m_quantitePanier}}</TD>
                 </TR>
             {{/records}}
             </TABLE>

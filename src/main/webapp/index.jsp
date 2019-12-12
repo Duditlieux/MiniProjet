@@ -27,6 +27,7 @@
                 // On fait un appel AJAX pour chercher les produits
                 $.ajax({
                     url: "allProducts",
+                    withCredentials: true,
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -201,16 +202,25 @@
         <!-- Le template qui sert à formatter la liste des codes -->
         <script id="codesTemplate" type="text/template">
             <TABLE border="1">
-            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th><c:if test="${not empty sessionScope.code}"><th>Panier</th></c:if></tr>
+            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th>
+            <c:if test="${not empty sessionScope.code}"><th>Retrait</th><th>Panier</th><th>Ajout</th></c:if></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
                 {{! Une ligne dans la table }}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
                     <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
+                    
                     <c:set var = "indispo" scope = "page" value = "{{m_indisponible}}}"/>
-                    <c:if test="${indispo == false}"><td><form method="POST"><input id="ref" name="ref" type="hidden" value="{{m_reference}}"><input type='submit' name='action' value='ajouter'></form></td></c:if>
-                    <c:if test="${indispo == true}"><td>Indisponible</td></c:if><td>{{m_quantitePanier}}</td>
-                    <c:remove var="indispo" scope="page" />
+                    <!--<c:if test="${indispo == false}"> -->
+                        <form method="POST">
+                        <input id="ref" name="ref" type="hidden" value="{{m_reference}}">
+                        <td><input type='submit' name='action' value='retrait'></td>
+                        <td>{{m_quantitePanier}}</td>
+                        <td><input type='submit' name='action' value='ajouter'></FORM></td>
+                    <!--</c:if>
+                    <c:if test="${indispo == true}"><td>Indisponible</td></c:if>
+                    <c:remove var="indispo" scope="page" /> -->
+                    
                 </TR>
                 
             {{/records}}
