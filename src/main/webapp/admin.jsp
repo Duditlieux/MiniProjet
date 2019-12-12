@@ -77,18 +77,26 @@
             }
 
             function drawChart2() {
+                var parsedUrl = new URL(window.location.href);
+                var debut = parsedUrl.searchParams.get("debut");
+                var fin = parsedUrl.searchParams.get("fin");
+                
+                var jsonData = $.ajax({
+                  url: "chiffreDAffaireParPays",
+                  data: {"debut": debut, "fin": fin},
+                  dataType: "json",
+                  async: false
+                  }).responseText;
 
                 // Create the data table.
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Topping');
-                data.addColumn('number', 'Slices');
-                data.addRows([
-                    ['option 1', 4],
-                    ['option 2', 1],
-                    ['option 3', 1],
-                    ['option 4', 1],
-                    ['option 5', 2]
-                ]);
+                data.addColumn('string', 'Pays');
+                data.addColumn('number', 'CA');
+                var array = JSON.parse(jsonData);
+  
+                $.each(array.records, function (i, obj) {
+                   data.addRow([obj.m_s, obj.m_n]);
+                  });
 
                 // Set chart options
                 var options = {'title': 'Chiffre d\'affaire par pays',
@@ -102,18 +110,26 @@
             }
 
             function drawChart3() {
+                var parsedUrl = new URL(window.location.href);
+                var debut = parsedUrl.searchParams.get("debut");
+                var fin = parsedUrl.searchParams.get("fin");
+                
+                var jsonData = $.ajax({
+                  url: "CaClientJson",
+                  data: {"debut": debut, "fin": fin},
+                  dataType: "json",
+                  async: false
+                  }).responseText;
 
                 // Create the data table.
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Topping');
-                data.addColumn('number', 'Slices');
-                data.addRows([
-                    ['option 1', 4],
-                    ['option 2', 1],
-                    ['option 3', 1],
-                    ['option 4', 1],
-                    ['option 5', 2]
-                ]);
+                data.addColumn('string', 'Client');
+                data.addColumn('number', 'CA');
+                var array = JSON.parse(jsonData);
+  
+                $.each(array.records, function (i, obj) {
+                   data.addRow([obj.m_s, obj.m_n]);
+                  });
 
                 // Set chart options
                 var options = {'title': 'Chiffre d\'affaire par client',
@@ -209,19 +225,30 @@
         <div class="row">
             <div class="cell">
                 <div id="chart_div1"></div>
+                <div><form onsubmit="drawChart1()">
+                    <input type="date" id="debut" name="debut"/>
+                    <input type="date" id="fin" name="fin"/>
+                    <input type="submit">
+                    </form></div>
             </div>
             <div class="cell">
                 <div id="chart_div2"></div>
+                <div><form onsubmit="drawChart2()">
+                    <input type="date" id="debut" name="debut"/>
+                    <input type="date" id="fin" name="fin"/>
+                    <input type="submit">
+                    </form></div>
             </div>
             <div class="cell">
                 <div id="chart_div3"></div>
+                <div><form onsubmit="drawChart3()">
+                    <input type="date" id="debut" name="debut"/>
+                    <input type="date" id="fin" name="fin"/>
+                    <input type="submit">
+                    </form></div>
             </div>
         </div>
-        <form onsubmit="drawChart1()">
-        <input type="date" id="debut" name="debut"/>
-        <input type="date" id="fin" name="fin"/>
-        <input type="submit">
-        </form>
+        
         
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         

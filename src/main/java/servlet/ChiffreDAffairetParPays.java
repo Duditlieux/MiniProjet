@@ -9,19 +9,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Client;
 import model.Couple;
 import model.DAO;
 import model.DataSourceFactory;
@@ -46,9 +43,19 @@ public class ChiffreDAffairetParPays extends HttpServlet {
             throws ServletException, IOException {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         Properties resultat = new Properties();
+        Date debut=null;
+        Date fin =null;
         
         try {
-            ArrayList<Couple> couples = dao.getChiffreDAffaireByCountry();
+            String debS = (String) request.getParameter("debut");
+            String finS = (String) request.getParameter("fin");
+            if (!debS.isEmpty()){
+                debut = Date.valueOf(debS);
+            }
+            if (!finS.isEmpty()){
+                fin = Date.valueOf(finS);
+            }
+            ArrayList<Couple> couples = dao.getChiffreDAffaireByCountry(debut,fin);
             resultat.put("records", couples);
         } catch (SQLException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
