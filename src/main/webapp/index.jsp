@@ -201,30 +201,30 @@
         <div id="codes"></div>
         <!-- Le template qui sert à formatter la liste des codes -->
         <script id="codesTemplate" type="text/template">
-            <TABLE border="1">
+            <table border="1">
             <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th>
-            <c:if test="${not empty sessionScope.code}"><th>Retrait</th><th>Panier</th><th>Ajout</th></c:if></tr>
+            <c:if test="${not empty sessionScope.code}"><th>Panier</th></c:if></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
                 {{! Une ligne dans la table }}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
-                    <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
+                    <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="prix_unit">{{m_prixUnitaire}} €</TD>
                     
                     <c:set var = "indispo" scope = "page" value = "{{m_indisponible}}}"/>
-                    <!--<c:if test="${indispo == false}"> -->
-                        <form method="POST">
-                        <input id="ref" name="ref" type="hidden" value="{{m_reference}}">
-                        <td><input type='submit' name='action' value='retrait'></td>
-                        <td>{{m_quantitePanier}}</td>
-                        <td><input type='submit' name='action' value='ajouter'></FORM></td>
-                    <!--</c:if>
+                    <c:if test="${(not empty sessionScope.code) and (indispo == false)}">
+                        <td><form method="POST">
+                        <input id="idP" name="idP" type="hidden" value="{{m_reference}}">
+                        <button type="submit" name="action" value="retrait">-</button>
+                        {{m_quantitePanier}}
+                        <button type="submit" name="action" value="ajouter">+</button></form></td>
+                    </c:if>
                     <c:if test="${indispo == true}"><td>Indisponible</td></c:if>
-                    <c:remove var="indispo" scope="page" /> -->
+                    <c:remove var="indispo" scope="page" />
                     
                 </TR>
                 
             {{/records}}
-            </TABLE>
+            </table>
         </script>
         
         <script id="loginTemplate" type="text/template">

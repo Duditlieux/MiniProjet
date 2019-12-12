@@ -207,7 +207,7 @@ public class LoginController extends HttpServlet {
         }
         
         private void ajouterPanier(HttpServletRequest request){
-            String ref = request.getParameter("ref");
+            String ref = request.getParameter("idP");
             Panier panier = null;
             HttpSession session = request.getSession(false);
 		if (session != null) {
