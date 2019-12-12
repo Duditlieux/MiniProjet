@@ -13,7 +13,7 @@
 
         <!-- On charge l'API Google -->
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript">
+        <script>
 
             
             
@@ -42,30 +42,28 @@
             // instantiates the pie chart, passes in the data and
             // draws it.
             function drawChart1() {
+                var parsedUrl = new URL(window.location.href);
+                var debut = parsedUrl.searchParams.get("debut");
+                var fin = parsedUrl.searchParams.get("fin");
                 
                 var jsonData = $.ajax({
                   url: "CaCategorieJson",
+                  data: {"debut": debut, "fin": fin},
                   dataType: "json",
                   async: false
                   }).responseText;
-
+                           
 
                 // Create the data table.
-                var point1, point2, dataArray = [];
                 var data = new google.visualization.DataTable();
                 data.addColumn('string', 'Catégories');
                 data.addColumn('number', 'CA');
-                
-                $.each(jsonData, function (i, obj) {
-
-                   point1 = "Categorie : " + obj.m_s + "";
-
-                   point2 = "CA : " + obj.m_n + "";
-
-                   dataArray.push([obj.m_s, obj.m_n]);
+                var array = JSON.parse(jsonData);
+  
+                $.each(array.records, function (i, obj) {
+                   data.addRow([obj.m_s, obj.m_n]);
                   });
                   
-                  data.addRows(dataArray);
 
                 // Set chart options
                 var options = {'title': 'Chiffre d\'affaire par catégorie d\'articles',
@@ -219,7 +217,7 @@
                 <div id="chart_div3"></div>
             </div>
         </div>
-        <form onsubmit="showChart1()">
+        <form onsubmit="drawChart1()">
         <input type="date" id="debut" name="debut"/>
         <input type="date" id="fin" name="fin"/>
         <input type="submit">

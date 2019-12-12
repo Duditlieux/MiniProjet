@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
@@ -53,18 +51,22 @@ public class CaCategorieJsonServlet extends HttpServlet {
         try {
             String debS = (String) request.getParameter("debut");
             String finS = (String) request.getParameter("fin");
-            System.out.println(debS);
-            try {
-                java.util.Date debD = new SimpleDateFormat("yyyy-MM-dd").parse(debS);
-                debut = new java.sql.Date(debD.getTime());
-                java.util.Date finD = new SimpleDateFormat("yyyy-MM-dd").parse(finS);
-                fin = new java.sql.Date(finD.getTime());
-            } catch (ParseException ex) {
-                Logger.getLogger(CaCategorieJsonServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            if (!debS.isEmpty()){
+                debut = Date.valueOf(debS);
+            }
+            if (!finS.isEmpty()){
+                fin = Date.valueOf(finS);
+            }
+           
             ArrayList<Couple> couples = dao.getCaByCategorie(debut, fin);
             //ArrayList<Couple> couples = dao.getCaByCategorie();
             resultat.put("records", couples);
+        } catch (NullPointerException ex){
+            try {
+                ArrayList<Couple> couples = dao.getCaByCategorie();
+            } catch (SQLException ex1) {
+                Logger.getLogger(CaCategorieJsonServlet.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } catch (SQLException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resultat.put("records", Collections.EMPTY_LIST);
