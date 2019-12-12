@@ -6,6 +6,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -382,6 +383,46 @@ public class DAO {
             
             }
         }
+    
+    
+    public ArrayList<Couple> getCaByCategorie(Date debut, Date fin) throws SQLException{
+        String sql = "SELECT PRODUIT.CATEGORIE,SUM(LIGNE.QUANTITE*PRODUIT.PRIX_UNITAIRE) FROM (PRODUIT INNER JOIN LIGNE ON LIGNE.PRODUIT=PRODUIT.REFERENCE) INNER JOIN COMMANDE ON COMMANDE.NUMERO=LIGNE.COMMANDE WHERE COMMANDE.SAISIE_LE BETWEEN ? AND ? GROUP BY PRODUIT.CATEGORIE";
+        ArrayList<Couple> couples = new ArrayList<>();  
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDate(1, debut);
+            stmt.setDate(2, fin);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Couple couple = new Couple();
+                couple.setS(rs.getString(1));
+                couple.setN(rs.getInt(2));
+                couples.add(couple);
+            }
+        }
+        return couples;
+    }
+    
+    public ArrayList<Couple> getCaByCategorie() throws SQLException{
+        String sql = "SELECT PRODUIT.CATEGORIE,SUM(LIGNE.QUANTITE*PRODUIT.PRIX_UNITAIRE) FROM (PRODUIT INNER JOIN LIGNE ON LIGNE.PRODUIT=PRODUIT.REFERENCE) INNER JOIN COMMANDE ON COMMANDE.NUMERO=LIGNE.COMMANDE GROUP BY PRODUIT.CATEGORIE";
+        ArrayList<Couple> couples = new ArrayList<>();  
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            //stmt.setDate(1, debut);
+            //stmt.setDate(2, fin);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Couple couple = new Couple();
+                couple.setS(rs.getString(1));
+                couple.setN(rs.getInt(2));
+                couples.add(couple);
+            }
+        }
+        return couples;
+    }
+    
+    
+    
     }
     
 

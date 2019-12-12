@@ -25,6 +25,10 @@
                         showProducts();
                     }
             );
+    
+            function showChart1() {
+                google.charts.setOnLoadCallback(drawChart1);
+            }
 
             // Load the Visualization API and the corechart package.
             google.charts.load('current', {'packages': ['corechart']});
@@ -38,18 +42,30 @@
             // instantiates the pie chart, passes in the data and
             // draws it.
             function drawChart1() {
+                
+                var jsonData = $.ajax({
+                  url: "CaCategorieJson",
+                  dataType: "json",
+                  async: false
+                  }).responseText;
+
 
                 // Create the data table.
+                var point1, point2, dataArray = [];
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Topping');
-                data.addColumn('number', 'Slices');
-                data.addRows([
-                    ['option 1', 4],
-                    ['option 2', 1],
-                    ['option 3', 1],
-                    ['option 4', 1],
-                    ['option 5', 2]
-                ]);
+                data.addColumn('string', 'Catégories');
+                data.addColumn('number', 'CA');
+                
+                $.each(jsonData, function (i, obj) {
+
+                   point1 = "Categorie : " + obj.m_s + "";
+
+                   point2 = "CA : " + obj.m_n + "";
+
+                   dataArray.push([obj.m_s, obj.m_n]);
+                  });
+                  
+                  data.addRows(dataArray);
 
                 // Set chart options
                 var options = {'title': 'Chiffre d\'affaire par catégorie d\'articles',
@@ -203,6 +219,11 @@
                 <div id="chart_div3"></div>
             </div>
         </div>
+        <form onsubmit="showChart1()">
+        <input type="date" id="debut" name="debut"/>
+        <input type="date" id="fin" name="fin"/>
+        <input type="submit">
+        </form>
         
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         
