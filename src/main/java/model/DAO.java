@@ -371,4 +371,17 @@ public class DAO {
         }
         return couples;
     }
-}
+    
+    public void SupprProduit(Product p)throws SQLException{
+        String sql = "DELETE FROM PRODUIT WHERE NOM=?";
+       
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, p.getNom());
+            int rs = stmt.executeUpdate();
+            
+            }
+        }
+    }
+    
+

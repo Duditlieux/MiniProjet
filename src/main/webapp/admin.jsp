@@ -16,9 +16,7 @@
         <script type="text/javascript">
 
             
-            function showError(xhr, status, message) {
-                alert(JSON.parse(xhr.responseText).message);
-            }
+            
             
             
             $(document).ready(// Exécuté à la fin du chargement de la page
@@ -54,13 +52,13 @@
                 ]);
 
                 // Set chart options
-                var options = {'title': 'Chiffre d\'affaire pas pays',
+                var options = {'title': 'Chiffre d\'affaire par catégorie d\'articles',
                     'is3D': true,
                     'width': 600,
                     'height': 400};
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.PieChart(document.getElementById('originePays'));
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
                 chart.draw(data, options);
             }
 
@@ -79,7 +77,7 @@
                 ]);
 
                 // Set chart options
-                var options = {'title': 'Titre du graphique',
+                var options = {'title': 'Chiffre d\'affaire par pays',
                     'is3D': true,
                     'width': 600,
                     'height': 400};
@@ -104,7 +102,7 @@
                 ]);
 
                 // Set chart options
-                var options = {'title': 'Titre du graphique',
+                var options = {'title': 'Chiffre d\'affaire par client',
                     'is3D': true,
                     'width': 600,
                     'height': 400};
@@ -119,7 +117,7 @@
             function showProducts() {
                 // On fait un appel AJAX pour chercher les produits
                 $.ajax({
-                    url: "getNbClientParPays",
+                    url: "allProducts",
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -129,13 +127,15 @@
                                 // On combine le template avec le résultat de la requête
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
-                                $('#originePays').html(processedTemplate);
+                                $('#codes').html(processedTemplate);
                             }
                 });
             }
 
             
-            
+            function showError(xhr, status, message) {
+                alert(JSON.parse(xhr.responseText).message);
+            }
             
         </script>
         <style>
@@ -168,7 +168,12 @@
             #chart_div3{
                 text-align: right;
             }
-
+            
+            .message{
+                font-size: 30px;
+            }
+            
+            
 
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -176,6 +181,8 @@
     </head>
     <body>
         <h1>Bonjour ${userName}</h1>
+        
+        <h1 class="message">Voici les dernières statistiques du site : </h1>
         <form method="POST">
             <input type="submit" name="action" value="logout"><br>
         </form>
@@ -187,16 +194,7 @@
 
         <div class="row">
             <div class="cell">
-
-                <div id="originePays"></div>
-                <%--<script id ="catTemplate" type="text/template">
-                    <select id="id_cat">
-                        <option onclick="showClient()" value=0>Tout les produits</option> 
-                        {{#records}}
-                            <option onclick="showProductFrom({{m_code}})" value={{m_code}}>{{m_libelle}}</option>
-                        {{/records}}
-                    </select>
-                </script>--%>
+                <div id="chart_div1"></div>
             </div>
             <div class="cell">
                 <div id="chart_div2"></div>
@@ -205,9 +203,11 @@
                 <div id="chart_div3"></div>
             </div>
         </div>
-        <br>
-        <br>
-
+        
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+        <h1 class="message">Et voici la liste des produits affichés aux clients et aux visiteurs : </h1>
+        
         <div id="codes"></div>
 
         <!--<div id="chart_div1"></div>
@@ -216,22 +216,29 @@
 
 
         <!-- Le template qui sert à formatter la liste des codes -->
-        <!--<script id="codesTemplate" type="text/template">
+        <script id="codesTemplate" type="text/template">
             <TABLE border="1">
-            <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th><c:if test="${not empty sessionScope.code}"><th>Panier</th></c:if></tr>
+            <tr><th>Référence</th><th>Nom</th><th>Fournisseur</th><th>Catégorie</th><th>Quantités/Unité</th><th>Prix Unitaire</th><th>Quantité en stock</th><th>Disponibilité</th><th>Action</th></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
                 {{! Une ligne dans la table }}
-                <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
-                    <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
-        <c:set var = "indispo" scope = "page" value = "{{m_indisponible}}}"/>
-        <c:if test="${indispo == false}"><td><form method="POST"><input id="ref" name="ref" type="hidden" value="{{m_reference}}"><input type='submit' name='action' value='ajouter'></form></td></c:if>
-        <c:if test="${indispo == true}"><td>Indisponible</td></c:if><td>{{m_quantitePanier}}</td>
-        <c:remove var="indispo" scope="page" />
-    </TR>
+                    <TR>
+                        <TD id="ref">{{m_reference}}</TD>
+                        <TD id="nom">{{m_nom}}</TD>
+                        <TD id="fournisseur">{{m_fournisseur}}</TD>
+                        <TD id="cat">{{m_categorie}}</TD>
+                        <TD id="qtt_unit">{{m_quantiteParUnite}}</TD>
+                        <TD id="prix_unit">{{m_prixUnitaire}}</TD>
+                        <TD id="en_stock">{{m_uniteEnStock}}</TD>
+                        <TD id="indispo">{{m_indisponible}}</TD>
+                        <TD><input type="submit" name="action" value="Supprimer"></input></TD>
+                        
+                </TR>
     
-{{/records}}
-</TABLE>
-</script>-->
+            {{/records}}
+            </TABLE>
+        </script>
+            
+          
     </body>
 </html>

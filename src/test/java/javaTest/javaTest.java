@@ -78,7 +78,7 @@ public class javaTest {
                 List<Product> before = dao.allProducts();
                 dao.addProduct(p);
                 List<Product> after = dao.allProducts();
-		assertEquals("Nombre de produits incorect !", after.size(), before.size()+1);
+		assertEquals("Nombre de produits incorrect !", after.size(), before.size()+1);
 	}
         
         
@@ -110,5 +110,15 @@ public class javaTest {
             Client c = dao.getClient("Maria Anders", "ALFKI");
             assertEquals("Erreur getClient", true, c.getContact().equals("Maria Anders"));
         }
+        
+        @Test
+	public void SupprProductTest() throws SQLException {
+		Product p = new Product(19, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
+                dao.addProduct(p);
+                List<Product> before = dao.allProducts();
+                dao.SupprProduit(p);
+                List<Product> after = dao.allProducts();
+		assertEquals("Nombre de produits incorrect !", after.size(), before.size()-1);
+	}
     
 }
