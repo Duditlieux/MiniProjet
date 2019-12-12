@@ -51,8 +51,6 @@ public class Panier extends ArrayList<Product> implements Serializable {
             p.setQuantitePanier(p.getQuantitePanier()-1);
             if (p.getQuantitePanier()>0){
                 this.add(p);
-            } else {
-                this.remove(this.indexOf(pr));
             }
         }
     }

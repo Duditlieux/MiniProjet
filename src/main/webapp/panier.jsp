@@ -72,7 +72,11 @@
                 {{! Une ligne dans la table }}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
                     <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD>
-                    <TD id="qte">{{m_quantitePanier}}</TD>
+                    <td><form method="POST">
+                        <input id="idP" name="idP" type="hidden" value="{{m_reference}}">
+                        <button type="submit" name="action" value="retrait">-</button>
+                        {{m_quantitePanier}}
+                        <button type="submit" name="action" value="ajouter">+</button></form></td>
                 </TR>
             {{/records}}
             </TABLE>
