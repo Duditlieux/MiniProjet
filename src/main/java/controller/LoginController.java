@@ -65,6 +65,11 @@ public class LoginController extends HttpServlet {
                                     break;
                                 case "commander":
                                     commande(request);
+                                    request.getRequestDispatcher("commandes.jsp").forward(request, response);
+                                    break;
+                                case "commandes":
+                                    request.getRequestDispatcher("commandes.jsp").forward(request, response);
+                                    break;
 			}
 		}
                 //request.getRequestDispatcher("index.jsp").forward(request, response);

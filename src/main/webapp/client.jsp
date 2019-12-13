@@ -62,6 +62,7 @@
         <h1>Bienvenue ${userName}</h1>
         <form method="POST"> 
             <input type='submit' name='action' value='accueil'><br>
+            <input type='submit' name='action' value='commandes'><br>
 	</form>
         
         <div id="infos"></div>
