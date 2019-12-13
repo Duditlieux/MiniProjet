@@ -212,7 +212,7 @@
                     
                     <c:set var = "indispo" scope = "page" value = "{{m_indisponible}}}"/>
                     <c:if test="${(not empty sessionScope.code) and (indispo == false)}">
-                        <td><form method="POST">
+                        <td><form action="LoginController" method="POST">
                         <input id="idP" name="idP" type="hidden" value="{{m_reference}}">
                         <button type="submit" name="action" value="retrait">-</button>
                         {{m_quantitePanier}}
@@ -229,7 +229,7 @@
         
         <script id="loginTemplate" type="text/template">
             <h1 id="h1-2">N'hésitez pas à vous connecter ci-dessous pour accéder à toutes nos fonctionnalités</h1>
-            <form id="codeForm" method="post">
+            <form id="codeForm" action="LoginController" method="post">
             <fieldset id="field"><legend>Saisie des informations de connection</legend>
                 Pseudo : <input id="loginParam" name="loginParam" required size="8"><br>
                 Mot de Passe : <input id="passwordParam" name="passwordParam" type="password"  title="Rappelez vous de ne jamais communiquer votre mot de passe"><br/>
@@ -243,7 +243,7 @@
         
         <script id="userTemplate" type="text/template">
             <h1>Bienvenue ${userName}</h1>
-            <form method="POST"> 
+            <form action="LoginController" method="POST"> 
             <input type='submit' name='action' value='profil'>
             <input type='submit' name='action' value='panier'>
             <input type='submit' name='action' value='logout'>
