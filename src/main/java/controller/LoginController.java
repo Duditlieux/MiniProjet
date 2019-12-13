@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Client;
+import model.Commande;
 import model.DAO;
 import model.DataSourceFactory;
 import model.Panier;
@@ -53,13 +54,17 @@ public class LoginController extends HttpServlet {
                                     break;
                                 case "ajouter":
                                     ajouterPanier(request);
+                                    request.getRequestDispatcher("panier.jsp").forward(request, response);
                                     break;
                                 case "retrait":
                                     retraitPanier(request);
+                                    request.getRequestDispatcher("panier.jsp").forward(request, response);
                                     break;
                                 case "panier":
                                     request.getRequestDispatcher("panier.jsp").forward(request, response);
                                     break;
+                                case "commander":
+                                    commande(request);
 			}
 		}
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -250,6 +255,21 @@ public class LoginController extends HttpServlet {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        }
+        
+        private void commande(HttpServletRequest request){
+            HttpSession session = request.getSession(false);
+		if (session != null) {
+                    try {
+                        Panier panier = (Panier) session.getAttribute("panier");
+                        Client client = dao.getClient(findCodeInSession(request));
+                        Commande commande = new Commande(client, 0, 0);
+                        dao.addCommande(commande, panier);
+                        session.setAttribute("panier", new Panier());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+		}    
         }
 
 }

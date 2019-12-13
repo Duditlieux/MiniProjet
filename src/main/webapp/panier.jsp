@@ -83,6 +83,9 @@
                 </TR>
             {{/records}}
             </TABLE>
+            <form method="POST"> 
+            <input type='submit' name='action' value='commander'><br>
+            </form>
         </script>
     </body>
 </html>

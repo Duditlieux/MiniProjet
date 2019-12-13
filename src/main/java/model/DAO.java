@@ -244,10 +244,11 @@ public class DAO {
                     statement3.setInt(1, idC);
                     statement3.setInt(2, ref);
                     statement3.setInt(3, qte);
+                    statement3.executeUpdate();
                 }
                 
                 myConnection.commit();
-            } catch (Exception ex) { // Une erreur s'est produite
+            } catch (SQLException ex) { // Une erreur s'est produite
                 // On logge le message d'erreur
                 Logger.getLogger("DAO").log(Level.SEVERE, "Transaction en erreur", ex);
                 myConnection.rollback(); // On annule la transaction
@@ -261,7 +262,7 @@ public class DAO {
     
     public List<Client> getAllClient() throws SQLException {
      String sql = "SELECT * FROM client";
-        List<Client> c = new ArrayList<Client>();
+        List<Client> c = new ArrayList<>();
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
