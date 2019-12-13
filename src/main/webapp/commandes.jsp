@@ -67,13 +67,14 @@
         <script id="panierTemplate" type="text/template">
             {{! Pour chaque enregistrement }}
             {{#records}}
+            Commande<br>
             <TABLE border="1">
             <tr><th>Nom</th><th>Quantités/Unité</th><th>Fournisseur</th><th>Prix Unitaire</th><th>Quantité</th></tr>
-            {{#0}}
+            {{#.}}
                 <TR><TD id="nom">{{m_nom}}</TD><TD id="prixunit">{{m_quantiteParUnite}}</TD>
                     <TD id="fournisseur">{{m_fournisseur}}</TD><TD id="qtt_unit">{{m_prixUnitaire}} €</TD><TD>{{m_quantitePanier}}</TD>
                 </TR>
-                {{/0}}
+                {{/.}}
                 </TABLE>
             {{/records}}
         </script>
