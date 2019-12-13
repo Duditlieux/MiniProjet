@@ -15,7 +15,7 @@ public class DataSourceFactory {
 	};
 	
 	// Choic du type de driver : embedded ou serveur
-	private static final DriverType TYPE = DriverType.server;
+	private static final DriverType TYPE = DriverType.embedded;
 	/**
 	 * Renvoie la source de données (server ou embbeded)
 	 * @return  la source de données
@@ -38,7 +38,7 @@ public class DataSourceFactory {
 			default: // Derby mode embedded, démarré automatiquement avec l'application
 				org.apache.derby.jdbc.EmbeddedDataSource es = new org.apache.derby.jdbc.EmbeddedDataSource();
 				es.setCreateDatabase("create");
-				es.setDatabaseName("embedded_sample");
+				es.setDatabaseName("projet");
 				result = es;
 		}
 
