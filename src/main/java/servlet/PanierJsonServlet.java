@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 import model.DAO;
 import model.DataSourceFactory;
 import model.Panier;
-import model.Product;
 
 /**
  *

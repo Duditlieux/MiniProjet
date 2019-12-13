@@ -445,6 +445,37 @@ public class DAO {
         return couples;
     }
     
+    public Panier getCommande(int nbC) throws SQLException{
+        String sql = "SELECT * FROM LIGNE WHERE COMMANDE=?";
+        Panier commande = new Panier();
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, nbC);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Product p = getProduct(rs.getInt(2));
+                p.setQuantitePanier(rs.getInt(3));
+                commande.add(p);
+            }
+        }
+        return commande;
+    }
+    
+    public List<Panier> getCommandesByClient(String idC) throws SQLException {
+        String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";
+        List<Panier> commandes = new ArrayList<>();
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, idC);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Panier c = getCommande(rs.getInt(1));
+                commandes.add(c);   
+            }
+        }
+        return commandes;
+    }
+    
     
     
     }
