@@ -268,7 +268,9 @@
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         
         <h1 class="message">Et voici la liste des produits affichés aux clients et aux visiteurs : </h1>
-        
+        <form method="POST">
+                            <input type="submit" name="action" value="Nouveau">
+                        </form>
         <div id="codes"></div>
 
         <!--<div id="chart_div1"></div>
