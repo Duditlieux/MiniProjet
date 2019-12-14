@@ -284,7 +284,7 @@
             {{#records}}
                 {{! Une ligne dans la table }}
                     <TR>
-                        <TD id="ref">{{m_reference}}</TD>
+                        <TD id="ref2">{{m_reference}}</TD>
                         <TD id="nom">{{m_nom}}</TD>
                         <TD id="fournisseur">{{m_fournisseur}}</TD>
                         <TD id="cat">{{m_categorie}}</TD>
@@ -292,7 +292,13 @@
                         <TD id="prix_unit">{{m_prixUnitaire}}</TD>
                         <TD id="en_stock">{{m_uniteEnStock}}</TD>
                         <TD id="indispo">{{m_indisponible}}</TD>
-                        <TD><input id="code" type="submit" name="action" value="Supprimer"></input></TD>
+                        <TD>
+                        <form method="POST">
+                            <input id="ref" name="ref" type="hidden" value="{{m_reference}}">
+                            <input type="submit" name="action" value="Editer">
+                            <input type="submit" name="action" value="Supprimer">
+                        </form>
+                        </TD>
                        
                     </TR>
     

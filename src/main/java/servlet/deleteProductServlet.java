@@ -54,7 +54,7 @@ public class deleteProductServlet extends HttpServlet {
             			
             
             
-            dao.supprProduit(nom);
+            //dao.supprProduit(nom);
             request.setAttribute("codes", dao.allProducts());	
 					
         } catch (SQLException ex) {

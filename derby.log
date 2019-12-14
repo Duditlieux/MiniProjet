@@ -1,0 +1,18 @@
+----------------------------------------------------------------
+Sat Dec 14 19:52:53 CET 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-016f-05c1-a06c-000006a187a0 
+on database directory /home/prisciou/NetBeansProjects/MiniProjet/projet with class loader ParallelWebappClassLoader
+  context: ROOT
+  delegate: false
+----------> Parent Classloader:
+sun.misc.Launcher$AppClassLoader@70dea4e
+ 
+Loaded from file:/home/prisciou/NetBeansProjects/MiniProjet/target/tomcat.8080/webapps/expanded/WEB-INF/lib/derby-10.14.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_232-b09
+user.dir=/home/prisciou/NetBeansProjects/MiniProjet
+os.name=Linux
+os.arch=amd64
+os.version=5.4.2-1-MANJARO
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

@@ -74,7 +74,7 @@ public class javaTest {
         
         @Test
 	public void addProductTest() throws SQLException {
-		Product p = new Product(19, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
+		Product p = new Product(100, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
                 List<Product> before = dao.allProducts();
                 dao.addProduct(p);
                 List<Product> after = dao.allProducts();
@@ -113,10 +113,10 @@ public class javaTest {
         
         @Test
 	public void SupprProductTest() throws SQLException {
-		Product p = new Product(19, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
+		Product p = new Product(78, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
                 dao.addProduct(p);
                 List<Product> before = dao.allProducts();
-                dao.supprProduit(p.getNom());
+                dao.delProduct(p.getReference());
                 List<Product> after = dao.allProducts();
 		assertEquals("Nombre de produits incorrect !", after.size(), before.size()-1);
 	}

@@ -74,6 +74,17 @@ public class LoginController extends HttpServlet {
                                     prodSuppr(request);
                                     request.getRequestDispatcher("admin.jsp").forward(request,response);
                                     break;
+                                case "Editer":
+                                    HttpSession session = request.getSession(false);
+                                    if (session != null) {
+                                            session.setAttribute("refEdit", request.getParameter("ref"));
+                                    }
+                                    request.getRequestDispatcher("produit.jsp").forward(request,response);
+                                    break;
+                                case "Modifier":
+                                    prodEdit(request);
+                                    request.getRequestDispatcher("admin.jsp").forward(request,response);
+                                    break;
 			}
 		}
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -282,16 +293,38 @@ public class LoginController extends HttpServlet {
         }
 
     private void prodSuppr(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);    
-        String ref = request.getParameter("code");
+        HttpSession session = request.getSession(false);
+        
+        Integer ref = Integer.parseInt(request.getParameter("ref"));
         if (session != null){
             try {
-                dao.supprProduit(ref);
+                dao.delProduct(ref);
             } catch (SQLException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }  
-            
+        }       
+    }
+    
+    private void prodEdit(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);    
+        Integer ref = Integer.parseInt(request.getParameter("code"));
+        String nom = (String) request.getParameter("m_nom");
+        Integer fournisseur = Integer.parseInt(request.getParameter("m_fournisseur"));
+        Integer cat = Integer.parseInt(request.getParameter("m_categorie"));
+        String qtePU = request.getParameter("m_quantiteParUnite");
+        float pu = Float.parseFloat(request.getParameter("m_prixUnitaire"));
+        Integer ustk = Integer.parseInt(request.getParameter("m_uniteEnStock"));
+        Integer ucom = Integer.parseInt(request.getParameter("m_uniteCommandees"));
+        Integer nivreap = Integer.parseInt(request.getParameter("m_niveauDeReapprovisionnement"));
+        boolean indisp = request.getParameter("m_indisponible").equals("true");
+        if (session != null){
+            try {
+                Product pr = new Product(ref, nom, fournisseur, cat, qtePU, pu, ustk, ucom, nivreap, indisp);
+                dao.updateProduct(pr);
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }       
     }
 
 }
