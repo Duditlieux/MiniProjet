@@ -97,22 +97,6 @@
                             }
                 });
             }
-
-            // Supprimer un code
-            function deleteCode(code) {
-                $.ajax({
-                    url: "deleteCode",
-                    data: {"code": code},
-                    dataType: "json",
-                    success: 
-                            function (result) {
-                                showCodes();
-                                console.log(result);
-                            },
-                    error: showError
-                });
-                return false;
-            }
             
             function showUser() {
                 var code = "${code}";

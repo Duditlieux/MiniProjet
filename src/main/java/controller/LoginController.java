@@ -70,6 +70,10 @@ public class LoginController extends HttpServlet {
                                 case "commandes":
                                     request.getRequestDispatcher("commandes.jsp").forward(request, response);
                                     break;
+                                case "Supprimer":
+                                    prodSuppr(request);
+                                    request.getRequestDispatcher("admin.jsp").forward(request,response);
+                                    break;
 			}
 		}
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -276,5 +280,18 @@ public class LoginController extends HttpServlet {
                     }
 		}    
         }
+
+    private void prodSuppr(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);    
+        String ref = request.getParameter("code");
+        if (session != null){
+            try {
+                dao.supprProduit(ref);
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  
+            
+    }
 
 }

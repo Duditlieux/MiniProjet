@@ -56,6 +56,18 @@ public class DAO {
         return result;
     }
     
+    public int supprProduit(String n)throws SQLException{
+        String sql = "DELETE FROM PRODUIT WHERE NOM=?";
+        int rs =0;
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, n);
+            rs = stmt.executeUpdate();
+            
+            }
+        return rs;
+        }
+    
     public int updateProduct(Product pr) throws SQLException {
         int result = 0;
         String sql = "UPDATE produit SET nom=?, fournisseur=?, categorie=?, quantite_par_unite=?, prix_unitaire=?, unites_en_stock=?, unites_commandees=?, niveau_de_reappro=?, indisponible=? WHERE reference=?";
@@ -376,16 +388,7 @@ public class DAO {
         return couples;
     }
     
-    public void SupprProduit(Product p)throws SQLException{
-        String sql = "DELETE FROM PRODUIT WHERE NOM=?";
-       
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, p.getNom());
-            int rs = stmt.executeUpdate();
-            
-            }
-        }
+    
     
     
     public ArrayList<Couple> getCaByCategorie(Date debut, Date fin) throws SQLException{

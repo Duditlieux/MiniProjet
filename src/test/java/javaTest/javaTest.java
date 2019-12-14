@@ -116,7 +116,7 @@ public class javaTest {
 		Product p = new Product(19, "Chips", 1, 1, "300g", 1.50f, 10, 0, 0, false);
                 dao.addProduct(p);
                 List<Product> before = dao.allProducts();
-                dao.SupprProduit(p);
+                dao.supprProduit(p.getNom());
                 List<Product> after = dao.allProducts();
 		assertEquals("Nombre de produits incorrect !", after.size(), before.size()-1);
 	}

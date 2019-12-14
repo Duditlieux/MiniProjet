@@ -161,6 +161,21 @@
                             }
                 });
             }
+            
+            // Supprimer un produit
+            function deleteProduct(code) {
+                $.ajax({
+                    url: "supprProduit",
+                    data: {"code": code},
+                    dataType: "json",
+                    success: 
+                            function (result) {
+                                alert("ça marche");
+                            },
+                    error: alert("ça marche pas")
+                });
+                return false;
+            }
 
             
             function showError(xhr, status, message) {
@@ -250,7 +265,7 @@
         </div>
         
         
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         
         <h1 class="message">Et voici la liste des produits affichés aux clients et aux visiteurs : </h1>
         
@@ -277,9 +292,9 @@
                         <TD id="prix_unit">{{m_prixUnitaire}}</TD>
                         <TD id="en_stock">{{m_uniteEnStock}}</TD>
                         <TD id="indispo">{{m_indisponible}}</TD>
-                        <TD><input type="submit" name="action" value="Supprimer"></input></TD>
-                        
-                </TR>
+                        <TD><input id="code" type="submit" name="action" value="Supprimer"></input></TD>
+                       
+                    </TR>
     
             {{/records}}
             </TABLE>
