@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.sql.Connection;
@@ -71,6 +66,7 @@ public class DAO {
             statement.setInt(7, pr.getUniteCommandees());
             statement.setInt(8, pr.getNiveauDeReapprovisionnement());
             statement.setInt(9, (pr.getIndisponible()) ? 1 : 0);
+            statement.setInt(10, pr.getReference());
             result = statement.executeUpdate();
         }
         return result;

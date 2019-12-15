@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
 import com.google.gson.Gson;
@@ -26,10 +21,6 @@ import model.DAO;
 import model.DataSourceFactory;
 import model.Product;
 
-/**
- *
- * @author prisciou
- */
 @WebServlet(name = "InfoProduit", urlPatterns = {"/InfoProduit"})
 public class InfoProduitJsonServlet extends HttpServlet {
 
@@ -70,7 +61,7 @@ public class InfoProduitJsonServlet extends HttpServlet {
             Client c = dao.getClient(code);
             out.println(gson.toJson(resultat));
         } catch (SQLException ex) {
-            Logger.getLogger(InfoClientJsonServelet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoClientJsonServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

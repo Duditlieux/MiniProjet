@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
 import com.google.gson.Gson;
@@ -25,10 +20,7 @@ import model.DAO;
 import model.DataSourceFactory;
 import model.Panier;
 
-/**
- *
- * @author prisciou
- */
+
 @WebServlet(name = "ListeCommandes", urlPatterns = {"/ListeCommandes"})
 public class ListeCommandes extends HttpServlet {
 

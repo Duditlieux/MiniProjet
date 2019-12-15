@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
 import com.google.gson.Gson;
@@ -23,10 +18,7 @@ import model.Couple;
 import model.DAO;
 import model.DataSourceFactory;
 
-/**
- *
- * @author pedago
- */
+
 @WebServlet(name = "GetNbClientParPays", urlPatterns = {"/chiffreDAffaireParPays"})
 public class ChiffreDAffairetParPays extends HttpServlet {
 
